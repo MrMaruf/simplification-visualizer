@@ -1,0 +1,13 @@
+{
+  "extends": "stylelint-config-standard",
+  "overrides": [
+    {
+      "files": ["**/*.module.css"],
+      "plugins": ["stylelint-use-nesting"],
+      "rules": {
+        "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
+        "csstools/use-nesting": "always"
+      }
+    }
+  ]
+}
