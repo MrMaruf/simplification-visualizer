@@ -2,7 +2,7 @@
   "extends": "stylelint-config-standard",
   "overrides": [
     {
-      "files": ["**/*.module.css"],
+      "files": ["src/**.css"],
       "plugins": ["stylelint-use-nesting"],
       "rules": {
         "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
