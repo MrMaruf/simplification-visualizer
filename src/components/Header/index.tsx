@@ -13,11 +13,9 @@ import { usePathname } from "next/navigation";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
+import Page from "@/types/Page";
 
-type Page = {
-  name: string;
-  url: string;
-};
+
 const pages: Page[] = [
   { name: "Sorting Algorithms", url: "/algorithms/sorting/" },
 ];
