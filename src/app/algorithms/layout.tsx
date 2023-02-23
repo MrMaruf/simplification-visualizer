@@ -9,9 +9,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main>
+    <Container>
       <Header />
-      <Container>{children}</Container>
-    </main>
+      {children}
+    </Container>
   );
 }
