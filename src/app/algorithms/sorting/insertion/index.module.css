@@ -1,0 +1,17 @@
+
+
+.list{
+    background: rgb(60, 57, 57);
+    margin:10px 0px;
+    padding: 0;
+    width: fit-content;
+    > li{
+        border-bottom: 1px solid;
+        &:last-child{
+            border-bottom: none;
+        }
+        span{
+            text-align: center;
+        }
+    }
+}
