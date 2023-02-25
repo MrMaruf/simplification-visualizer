@@ -24,9 +24,9 @@ type Props = {};
 
 const Header = (props: Props) => {
   const path = usePathname();
-  console.log("'", path, "'");
+  // console.log("'", path, "'");
   const navigation = path?.split("/");
-  console.log(navigation);
+  // console.log(navigation);
 
   return (
     <header className={styles.header}>
