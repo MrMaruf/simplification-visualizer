@@ -1,17 +1,31 @@
-
-
-.list{
-    background: rgb(60, 57, 57);
-    margin:10px 0px;
-    padding: 0;
-    width: fit-content;
-    > li{
-        border-bottom: 1px solid;
-        &:last-child{
-            border-bottom: none;
-        }
-        span{
-            text-align: center;
-        }
+.stack {
+    h2 {
+        align-self: center;
     }
+    button{
+        width: 100%;
+    }
+}
+
+
+.list {
+  background: rgb(60, 57, 57);
+  margin: 10px 0px;
+  padding: 0;
+  width: fit-content;
+  display:flex;
+  flex-direction: row;
+
+  > li {
+    border: 1px solid;
+    &:not(:last-child){
+        border-right:none;
+    }
+    /* &:last-child {
+      border-left: none;
+    } */
+    span {
+      text-align: center;
+    }
+  }
 }
