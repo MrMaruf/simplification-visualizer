@@ -9,15 +9,15 @@
 
 
 .list {
-  background: rgb(60, 57, 57);
+  /* background: rgb(60, 57, 57); */
   margin: 10px 0px;
   padding: 0;
-  width: fit-content;
+  /* width: fit-content; */
   display:flex;
   flex-direction: row;
 
   > li {
-    border: 1px solid;
+    /* border: 1px solid; */
     &:not(:last-child){
         border-right:none;
     }
@@ -25,6 +25,8 @@
       border-left: none;
     } */
     span {
+      width: 24px;
+      height: 24px;
       text-align: center;
     }
   }
