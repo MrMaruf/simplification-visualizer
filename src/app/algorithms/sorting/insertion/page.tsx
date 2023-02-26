@@ -20,33 +20,34 @@ function shuffleArray(array: any[]) {
   return array;
 }
 
+const sortArray = (arrayToSort: number[]) => {
+  const length = arrayToSort.length;
+  for (let index = 1; index < length; index++) {
+    let index2 = index;
+    do {
+      let elementLeft = arrayToSort[index2 - 1];
+      let elementRight = arrayToSort[index2];
+      if (elementLeft < elementRight) break;
+      arrayToSort[index2] = elementLeft;
+      arrayToSort[index2 - 1] = elementRight;
+      index2--;
+    } while (index2 > 0);
+  }
+  return arrayToSort;
+};
+
 const InsertionSortingAlgorithm = (props: Props) => {
-  const [shuffledItems, setShuffledItems] = useState([...items]);
-  const [sortedItems, setSortedArray] = useState([...items]);
+  const [shuffledItems, setShuffledItems] = useState<number[]>([]);
+  const [sortedItems, setSortedArray] = useState<number[]>([]);
 
   const onShuffle = () => {
-    setShuffledItems((value) => {
-      const newShuffle = shuffleArray([...value])
-      setSortedArray([...newShuffle])
-      return newShuffle
-    });
-    
+    const newShuffle = shuffleArray([...items]);
+    setShuffledItems(newShuffle);
   };
   const onSort = () => {
     const toSort = [...shuffledItems];
-    const length = shuffledItems.length;
-    for (let index = 1; index < length - 1; index++) {
-      let index2 = index;
-      do {
-        let elementLeft = toSort[index2 - 1];
-        let elementRight = toSort[index2];
-        if (elementLeft < elementRight) break;
-        toSort[index2] = elementLeft;
-        toSort[index2 - 1] = elementRight;
-        index2--;
-      } while (index2 > 0);
-    }
-    setSortedArray(toSort);
+    const sorted = sortArray(toSort);
+    setSortedArray(sorted);
   };
   return (
     <Box margin="15px 10px">
@@ -72,22 +73,26 @@ const InsertionSortingAlgorithm = (props: Props) => {
             <List className={styles.list} items={items} />
           </Grid>
         </Grid>
-        <Grid container xs={8}>
-          <Grid display="flex" xs={4}>
-            <h2>Shuffled Array</h2>
+        {shuffledItems.length > 0 && (
+          <Grid container xs={8}>
+            <Grid display="flex" xs={4}>
+              <h2>Shuffled Array</h2>
+            </Grid>
+            <Grid xs={8}>
+              <List className={styles.list} items={shuffledItems} />
+            </Grid>
           </Grid>
-          <Grid xs={8}>
-            <List className={styles.list} items={shuffledItems} />
+        )}
+        {sortedItems.length > 0 && (
+          <Grid container xs={8}>
+            <Grid display="flex" xs={4}>
+              <h2>Sorted Array</h2>
+            </Grid>
+            <Grid xs={8}>
+              <List className={styles.list} items={sortedItems} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container xs={8}>
-          <Grid display="flex" xs={4}>
-            <h2>Sorted Array</h2>
-          </Grid>
-          <Grid xs={8}>
-            <List className={styles.list} items={sortedItems} />
-          </Grid>
-        </Grid>
+        )}
       </Grid>
     </Box>
   );
