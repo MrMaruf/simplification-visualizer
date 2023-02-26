@@ -4,6 +4,7 @@ import React from "react";
 import MaterialListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { Flipped } from "react-flip-toolkit";
 
 type Props = {
   name: string | number;
@@ -22,11 +23,13 @@ const ListItem = (props: Props) => {
     );
   }
   return (
-    <MaterialListItem disablePadding>
-      <ListItemButton>
-        <ListItemText primary={props.name} />
-      </ListItemButton>
-    </MaterialListItem>
+    <Flipped key={name} flipId={name}>
+      <MaterialListItem disablePadding>
+        <ListItemButton>
+          <ListItemText primary={props.name} />
+        </ListItemButton>
+      </MaterialListItem>
+    </Flipped>
   );
 };
 
