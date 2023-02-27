@@ -134,12 +134,18 @@ const InsertionSortingAlgorithm = (props: Props) => {
           </Grid>
           {sortingStages.length > 0 && sortingSpeed === "stages" && (
             <Grid container xs={8} className={styles.stages}>
-              <Grid xs={2}>
+              <Grid
+                xs={2}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
                 <Typography>Stages</Typography>
               </Grid>
               <Grid xs={10}>
                 <Pagination
                   color="primary"
+                  boundaryCount={2}
                   count={sortingStages.length}
                   onChange={onStageChange}
                 />
