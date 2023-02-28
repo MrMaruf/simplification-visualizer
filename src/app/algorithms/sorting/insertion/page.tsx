@@ -53,6 +53,7 @@ const stagedSortArray = (toSort: number[]) => {
       index2--;
     } while (index2 > 0);
   }
+  stages.push([...toSort]); // add last stage
   return stages;
 };
 const timeout = async (timeMs: number) => {
@@ -78,6 +79,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setItems([]);
   };
   const onShuffle = () => {
+    setSortingStages([]);
     const newShuffle = shuffleArray([...originalItems]);
     setItems(newShuffle);
   };
@@ -89,6 +91,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setSortingStages(stages);
   };
   const onStageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    console.log(value)
     const selectedStage = sortingStages[value - 1];
     setItems(selectedStage);
   };
