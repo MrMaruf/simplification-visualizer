@@ -3,7 +3,11 @@
 import List from "@/components/List";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
+import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
@@ -12,7 +16,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./index.module.css";
 
 type Props = {};
-type SortingSpeed = "realtime" | "stages";
+type SortingType = "realtime" | "staged manual" | "staged automatic";
 const originalItems = Array.from(new Array(10), (x, i) => i + 1);
 const generateArray = (length: number) =>
   Array.from(new Array(length), (x, i) => i + 1);
@@ -67,14 +71,10 @@ const timeout = async (timeMs: number) => {
 //TODO: Look into step by step sorting and shuffling.
 //TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
 const InsertionSortingAlgorithm = (props: Props) => {
-  const [sortingSpeed, setSortingSpeed] = useState<SortingSpeed>("realtime");
+  const [sortingType, setSortingType] = useState<SortingType>("realtime");
   const [items, setItems] = useState<number[]>(generateArray(10));
   const [sortingStages, setSortingStages] = useState<number[][]>([]);
-  const onSortingSpeedChanged = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setSortingSpeed(event.target.checked ? "realtime" : "stages");
-  };
+  const [stagingSpeed, setStagingSpeed] = useState(0);
   const onReset = () => {
     setItems([]);
   };
@@ -85,13 +85,13 @@ const InsertionSortingAlgorithm = (props: Props) => {
   };
   const onSort = () => {
     const toSort = [...items];
-    if (sortingSpeed === "realtime") return setItems(sortArray(toSort));
+    if (sortingType === "realtime") return setItems(sortArray(toSort));
 
     const stages = stagedSortArray(toSort);
     setSortingStages(stages);
   };
   const onStageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    console.log(value)
+    console.log(value);
     const selectedStage = sortingStages[value - 1];
     setItems(selectedStage);
   };
@@ -124,18 +124,31 @@ const InsertionSortingAlgorithm = (props: Props) => {
             </Button>
           </Grid>
 
-          <Grid xs={2}>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography>Staged</Typography>
-              <Switch
-                checked={sortingSpeed === "realtime"}
-                onChange={onSortingSpeedChanged}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-              <Typography>Realtime</Typography>
-            </Stack>
+          <Grid xs={3}>
+            <FormControl fullWidth>
+              <InputLabel id="sort-type-label">Sorting Type</InputLabel>
+              <Select
+                labelId="sort-type-label"
+                id="sort-type"
+                value={sortingType}
+                label="Sort Type"
+                onChange={(event) => {
+                  const target = event.target;
+                  const value = target.value as SortingType;
+                  setSortingType(value);
+                }}
+              >
+                <MenuItem value="realtime">Realtime sorting</MenuItem>
+                <MenuItem value={"staged automatic"}>
+                  Slowed step-by-step sorting
+                </MenuItem>
+                <MenuItem value={"staged manual"}>
+                  Manual stage controls
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
-          {sortingStages.length > 0 && sortingSpeed === "stages" && (
+          {sortingStages.length > 0 && sortingType === "staged manual" && (
             <Grid container xs={8} className={styles.stages}>
               <Grid
                 xs={2}
@@ -147,6 +160,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
               </Grid>
               <Grid xs={10}>
                 <Pagination
+                  disabled={stagingSpeed !== 0}
                   color="primary"
                   boundaryCount={2}
                   count={sortingStages.length}

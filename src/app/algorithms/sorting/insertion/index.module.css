@@ -1,5 +1,6 @@
 .controllers {
   background-color: rgb(var(--card-rgb));
+  align-items: center;
 }
 
 .stages {
