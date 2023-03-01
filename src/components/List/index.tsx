@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import MaterialList from "@mui/material/List";
@@ -13,16 +15,17 @@ type Props = {
 
 const List = (props: Props & StyleProps) => {
   const { items } = props;
-  return (
-    <Flipper flipKey={items.join("")}>
-      <MaterialList className={props.className} style={props.style}>
-        {items.map((item) => {
-          if (typeof item === "object") return <ListItem {...item} />;
-          return <ListItem key={item} name={item} />;
-        })}
-      </MaterialList>
-    </Flipper>
+  const base = (
+    <MaterialList className={props.className} style={props.style}>
+      {items.map((item) => {
+        if (typeof item === "object")
+          return <ListItem key={item.name} {...item} />;
+        return <ListItem key={item} name={item} />;
+      })}
+    </MaterialList>
   );
+  if ("url" in items) return base;
+  return <Flipper flipKey={items.join("")}>{base}</Flipper>;
 };
 
 export default List;
