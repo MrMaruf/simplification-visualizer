@@ -74,7 +74,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
   const [sortingType, setSortingType] = useState<SortingType>("realtime");
   const [items, setItems] = useState<number[]>(generateArray(10));
   const [sortingStages, setSortingStages] = useState<number[][]>([]);
-  const [stagingSpeed, setStagingSpeed] = useState(0);
+  const [stagingSpeed, setStagingSpeed] = useState(300);
   const [currentStage, setCurrentStage] = useState(0);
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
   const onReset = () => {
@@ -111,7 +111,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
         setItems(selectedStage);
         return value + 1;
       });
-    }, 300);
+    }, stagingSpeed);
   };
   useEffect(() => {
     return () => {
@@ -125,7 +125,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setItems(selectedStage);
   };
   return (
-    <Box margin="15px 10px">
+    <Box>
       <h1>Insertion Algorithm</h1>
       <Grid container spacing={2} marginTop="15px" className={styles.stack}>
         <Grid container xs={8}>
