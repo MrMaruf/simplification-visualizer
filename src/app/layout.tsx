@@ -1,10 +1,10 @@
-import './globals.css'
-import "./imports"
+import "./globals.css";
+import "./imports";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -15,5 +15,5 @@ export default function RootLayout({
       <head />
       <body>{children}</body>
     </html>
-  )
+  );
 }
