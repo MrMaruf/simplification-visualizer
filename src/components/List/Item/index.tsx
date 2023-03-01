@@ -8,11 +8,11 @@ import { Flipped } from "react-flip-toolkit";
 
 type Props = {
   name: string | number;
-  href?: string;
+  url?: string;
 };
 
 const ListItem = (props: Props) => {
-  const { name, href } = props;
+  const { name, url: href } = props;
   if (href) {
     return (
       <MaterialListItem disablePadding>
