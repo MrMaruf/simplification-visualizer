@@ -1,12 +1,6 @@
 .header {
-  display: flex;
-  justify-content: inherit;
-  align-items: inherit;
-  font-size: 0.85rem;
+  margin:1rem 0;
   max-width: var(--max-width);
-  width: 100%;
-  z-index: 2;
-  font-family: var(--font-mono);
 
   a {
     display: flex;
@@ -29,12 +23,11 @@
 }
 
 .breadcrumbs {
-  li {
-    color: white;
-  }
 
-  > ol > li:last-child {
-    font-weight: 700;
+  ol > li{
+    font-size: 1.1rem;
+    &:last-child {
+    font-weight: 700;}
   }
 }
 
