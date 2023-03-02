@@ -8,8 +8,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import Select from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
+import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -60,13 +59,20 @@ const stagedSortArray = (toSort: number[]) => {
   stages.push([...toSort]); // add last stage
   return stages;
 };
-const timeout = async (timeMs: number) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("finished");
-    }, timeMs);
-  });
-};
+const marks = [
+  {
+    value: 100,
+    label: "100ms",
+  },
+  {
+    value: 300,
+    label: "300ms",
+  },
+  {
+    value: 1000,
+    label: "1s",
+  },
+];
 //TODO: Look into animation on end stagger
 //TODO: Look into step by step sorting and shuffling.
 //TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
@@ -98,9 +104,9 @@ const InsertionSortingAlgorithm = (props: Props) => {
 
     const stages = stagedSortArray(toSort);
     setSortingStages(stages);
-    if (sortingType === "staged automatic") startSortingInterval(stages);
+    if (sortingType === "staged automatic") startSortingInterval(stages, stagingSpeed);
   };
-  const startSortingInterval = (stages: number[][]) => {
+  const startSortingInterval = (stages: number[][], stagingSpeed:number) => {
     sortingIntervalRef.current = setInterval(() => {
       setCurrentStage((value) => {
         if (value === stages.length) {
@@ -199,6 +205,31 @@ const InsertionSortingAlgorithm = (props: Props) => {
                   onChange={onStageChange}
                 />
               </Grid>
+            </Grid>
+          )}
+          {sortingType === "staged automatic" && (
+            <Grid container xs={8} padding="3rem">
+                <Typography id="sorting-speed" gutterBottom>
+                  Staging speed
+                </Typography>
+                <Slider
+                  track={false}
+                  aria-labelledby="sorting-speed"
+                  min={100}
+                  max={1000}
+                  value={stagingSpeed}
+                  onChange={(event, value) => {
+                    if (typeof value === "number") setStagingSpeed(value);
+                  }}
+                  defaultValue={300}
+                  marks={marks}
+                />
+                {stagingSpeed < 300 && (
+                  <Typography id="warning-text" color="orange" gutterBottom>
+                    Speed set below 300ms might cause weird behaviour on
+                    lower-range PCs
+                  </Typography>
+                )}
             </Grid>
           )}
         </Grid>
