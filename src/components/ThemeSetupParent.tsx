@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useMemo } from "react";
 
 type Props = {
@@ -11,7 +10,11 @@ type Props = {
 };
 
 const ThemeSetupParent = (props: Props) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [prefersDarkMode, setPrefersDarkMode] = useState(false);
+  useEffect(() => {
+    const result = window.matchMedia("(prefers-color-scheme: dark)");
+    setPrefersDarkMode(result.matches);
+  }, []);
 
   const theme = useMemo(
     () =>
