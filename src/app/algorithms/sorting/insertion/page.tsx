@@ -82,6 +82,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
   const [sortingStages, setSortingStages] = useState<number[][]>([]);
   const [stagingSpeed, setStagingSpeed] = useState(300);
   const [currentStage, setCurrentStage] = useState(0);
+  const [isSorting, setIsSorting] = useState(false);
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
   const onReset = () => {
     setItems(generateArray(10));
@@ -94,7 +95,9 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setItems(newShuffle);
   };
   const clearSortingInterval = () => {
-    if (sortingIntervalRef.current) clearInterval(sortingIntervalRef.current);
+    if (!sortingIntervalRef.current) return;
+    clearInterval(sortingIntervalRef.current);
+    setIsSorting(false);
   };
   const onSort = () => {
     clearSortingInterval();
@@ -104,9 +107,11 @@ const InsertionSortingAlgorithm = (props: Props) => {
 
     const stages = stagedSortArray(toSort);
     setSortingStages(stages);
-    if (sortingType === "staged automatic") startSortingInterval(stages, stagingSpeed);
+    if (sortingType === "staged automatic")
+      startSortingInterval(stages, stagingSpeed);
   };
-  const startSortingInterval = (stages: number[][], stagingSpeed:number) => {
+  const startSortingInterval = (stages: number[][], stagingSpeed: number) => {
+    setIsSorting(true);
     sortingIntervalRef.current = setInterval(() => {
       setCurrentStage((value) => {
         if (value === stages.length) {
@@ -145,7 +150,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
         <Grid container xs={11} className={styles.controllers}>
           <Grid xs={3}>
             <FormControl fullWidth>
-              <InputLabel id="sort-type-label">Sorting Type</InputLabel>
+              <InputLabel id="sort-type-label">Sort Type</InputLabel>
               <Select
                 labelId="sort-type-label"
                 id="sort-type"
@@ -173,7 +178,14 @@ const InsertionSortingAlgorithm = (props: Props) => {
             </Button>
           </Grid>
           <Grid xs={3}>
-            <Button variant="contained" color="primary" onClick={onSort}>
+            <Button
+              disabled={items.every(
+                (value, index) => originalItems[index] === value
+              )}
+              variant="contained"
+              color="primary"
+              onClick={onSort}
+            >
               Sort Array
             </Button>
           </Grid>
@@ -182,8 +194,33 @@ const InsertionSortingAlgorithm = (props: Props) => {
               Reset Array
             </Button>
           </Grid>
-
-          {sortingStages.length > 0 && (
+          {sortingType === "staged automatic" && (
+            <Grid container xs={8} padding="3rem">
+              <Typography id="sorting-speed" gutterBottom>
+                Staging speed
+              </Typography>
+              <Slider
+                track={false}
+                aria-labelledby="sorting-speed"
+                min={100}
+                max={1000}
+                value={stagingSpeed}
+                onChange={(event, value) => {
+                  if (typeof value === "number") setStagingSpeed(value);
+                }}
+                defaultValue={300}
+                marks={marks}
+                disabled={isSorting}
+              />
+              {stagingSpeed < 300 && (
+                <Typography id="warning-text" color="orange" gutterBottom>
+                  Speed set below 300ms might cause weird behaviour on
+                  lower-range PCs
+                </Typography>
+              )}
+            </Grid>
+          )}
+          {sortingStages.length > 1 && (
             <Grid container xs={8} className={styles.stages}>
               <Grid
                 xs={2}
@@ -205,31 +242,6 @@ const InsertionSortingAlgorithm = (props: Props) => {
                   onChange={onStageChange}
                 />
               </Grid>
-            </Grid>
-          )}
-          {sortingType === "staged automatic" && (
-            <Grid container xs={8} padding="3rem">
-                <Typography id="sorting-speed" gutterBottom>
-                  Staging speed
-                </Typography>
-                <Slider
-                  track={false}
-                  aria-labelledby="sorting-speed"
-                  min={100}
-                  max={1000}
-                  value={stagingSpeed}
-                  onChange={(event, value) => {
-                    if (typeof value === "number") setStagingSpeed(value);
-                  }}
-                  defaultValue={300}
-                  marks={marks}
-                />
-                {stagingSpeed < 300 && (
-                  <Typography id="warning-text" color="orange" gutterBottom>
-                    Speed set below 300ms might cause weird behaviour on
-                    lower-range PCs
-                  </Typography>
-                )}
             </Grid>
           )}
         </Grid>
