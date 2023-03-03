@@ -86,7 +86,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setIsSorting(false);
   };
   const onSort = () => {
-    clearSortingInterval();
+    if (isSorting) return clearSortingInterval();
     setCurrentStage(0);
     const toSort = [...items];
     if (sortingType === "realtime") return setItems(sortArray(toSort));
@@ -169,10 +169,10 @@ const InsertionSortingAlgorithm = (props: Props) => {
                 (value, index) => originalItems[index] === value
               )}
               variant="contained"
-              color="primary"
+              color={isSorting ? "error" :"primary"}
               onClick={onSort}
             >
-              Sort Array
+              {isSorting ? "Stop sorting" : "Sort Array"}
             </Button>
           </Grid>
           <Grid xs={3}>
