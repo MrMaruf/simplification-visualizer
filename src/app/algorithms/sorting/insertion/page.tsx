@@ -1,21 +1,18 @@
 "use client";
 
 import List from "@/components/List";
+import SortTypeSelector from "@/components/SortTypeSelector";
 import TimeSlider from "@/components/TimeSlider";
+import SortingType from "@/types/SortType";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
-import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
 
 type Props = {};
-type SortingType = "realtime" | "staged manual" | "staged automatic";
 const originalItems = Array.from(new Array(10), (x, i) => i + 1);
 const generateArray = (length: number) =>
   Array.from(new Array(length), (x, i) => i + 1);
@@ -135,28 +132,10 @@ const InsertionSortingAlgorithm = (props: Props) => {
         </Grid>
         <Grid container xs={11} className={styles.controllers}>
           <Grid xs={3}>
-            <FormControl fullWidth>
-              <InputLabel id="sort-type-label">Sort Type</InputLabel>
-              <Select
-                labelId="sort-type-label"
-                id="sort-type"
-                value={sortingType}
-                label="Sort Type"
-                onChange={(event) => {
-                  const target = event.target;
-                  const value = target.value as SortingType;
-                  setSortingType(value);
-                }}
-              >
-                <MenuItem value="realtime">Realtime sorting</MenuItem>
-                <MenuItem value={"staged automatic"}>
-                  Slowed step-by-step sorting
-                </MenuItem>
-                <MenuItem value={"staged manual"}>
-                  Manual stage controls
-                </MenuItem>
-              </Select>
-            </FormControl>
+            <SortTypeSelector
+              value={sortingType}
+              onChange={(value) => setSortingType(value)}
+            />
           </Grid>
           <Grid xs={3}>
             <Button variant="contained" color="info" onClick={onShuffle}>
@@ -169,7 +148,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
                 (value, index) => originalItems[index] === value
               )}
               variant="contained"
-              color={isSorting ? "error" :"primary"}
+              color={isSorting ? "error" : "primary"}
               onClick={onSort}
             >
               {isSorting ? "Stop sorting" : "Sort Array"}

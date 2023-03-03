@@ -1,4 +1,5 @@
 import Page from "./Page";
+import SortingType from "./SortType";
 
-export type { Page, };
-export * from "./BaseProps"
+export type { Page, SortingType };
+export * from "./BaseProps";
