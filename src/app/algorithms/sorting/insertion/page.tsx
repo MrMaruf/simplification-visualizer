@@ -1,6 +1,7 @@
 "use client";
 
 import List from "@/components/List";
+import TimeSlider from "@/components/TimeSlider";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -8,10 +9,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import Select from "@mui/material/Select";
-import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
 
 type Props = {};
@@ -59,22 +59,8 @@ const stagedSortArray = (toSort: number[]) => {
   stages.push([...toSort]); // add last stage
   return stages;
 };
-const marks = [
-  {
-    value: 100,
-    label: "100ms",
-  },
-  {
-    value: 300,
-    label: "300ms",
-  },
-  {
-    value: 1000,
-    label: "1s",
-  },
-];
-//TODO: Look into animation on end stagger
-//TODO: Look into step by step sorting and shuffling.
+
+//TODO: Extract functionality to components for reuse
 //TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
 const InsertionSortingAlgorithm = (props: Props) => {
   const [sortingType, setSortingType] = useState<SortingType>("realtime");
@@ -196,28 +182,13 @@ const InsertionSortingAlgorithm = (props: Props) => {
           </Grid>
           {sortingType === "staged automatic" && (
             <Grid container xs={8} padding="3rem">
-              <Typography id="sorting-speed" gutterBottom>
-                Staging speed
-              </Typography>
-              <Slider
-                track={false}
-                aria-labelledby="sorting-speed"
-                min={100}
-                max={1000}
+              <TimeSlider
                 value={stagingSpeed}
                 onChange={(event, value) => {
                   if (typeof value === "number") setStagingSpeed(value);
                 }}
-                defaultValue={300}
-                marks={marks}
                 disabled={isSorting}
               />
-              {stagingSpeed < 300 && (
-                <Typography id="warning-text" color="orange" gutterBottom>
-                  Speed set below 300ms might cause weird behaviour on
-                  lower-range PCs
-                </Typography>
-              )}
             </Grid>
           )}
           {sortingStages.length > 1 && (
