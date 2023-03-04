@@ -3,6 +3,7 @@
 import List from "@/components/List";
 import SortTypeSelector from "@/components/SortTypeSelector";
 import TimeSlider from "@/components/TimeSlider";
+import { SortingStateProvider, useSortingState } from "@/store/SortingContext";
 import SortingType from "@/types/SortType";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -60,22 +61,16 @@ const stagedSortArray = (toSort: number[]) => {
 //TODO: Extract functionality to components for reuse
 //TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
 const InsertionSortingAlgorithm = (props: Props) => {
-  const [sortingType, setSortingType] = useState<SortingType>("realtime");
-  const [items, setItems] = useState<number[]>(generateArray(10));
-  const [sortingStages, setSortingStages] = useState<number[][]>([]);
-  const [stagingSpeed, setStagingSpeed] = useState(300);
-  const [currentStage, setCurrentStage] = useState(0);
+  const sortingCtx = useSortingState();
+  const { sortingType, items, stagingSpeed } = sortingCtx.state;
   const [isSorting, setIsSorting] = useState(false);
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
   const onReset = () => {
-    setItems(generateArray(10));
+    sortingCtx.dispatch({ type: "set items", items: generateArray(10) });
   };
   const onShuffle = () => {
     clearSortingInterval();
-    setCurrentStage(0);
-    setSortingStages([]);
-    const newShuffle = shuffleArray([...originalItems]);
-    setItems(newShuffle);
+    sortingCtx.dispatch({ type: "shuffle array" });
   };
   const clearSortingInterval = () => {
     if (!sortingIntervalRef.current) return;
@@ -84,18 +79,22 @@ const InsertionSortingAlgorithm = (props: Props) => {
   };
   const onSort = () => {
     if (isSorting) return clearSortingInterval();
-    setCurrentStage(0);
     const toSort = [...items];
-    if (sortingType === "realtime") return setItems(sortArray(toSort));
+    if (sortingType === "realtime")
+      return sortingCtx.dispatch({
+        type: "set items",
+        items: sortArray(toSort),
+      });
 
     const stages = stagedSortArray(toSort);
-    setSortingStages(stages);
+    sortingCtx.dispatch({ type: "set stages", stages });
     if (sortingType === "staged automatic")
       startSortingInterval(stages, stagingSpeed);
   };
   const startSortingInterval = (stages: number[][], stagingSpeed: number) => {
     setIsSorting(true);
     sortingIntervalRef.current = setInterval(() => {
+      sortingCtx.dispatch({type:"move stage"})
       setCurrentStage((value) => {
         if (value === stages.length) {
           clearSortingInterval();
@@ -119,92 +118,94 @@ const InsertionSortingAlgorithm = (props: Props) => {
     setItems(selectedStage);
   };
   return (
-    <Box>
-      <h1>Insertion Algorithm</h1>
-      <Grid container spacing={2} marginTop="15px" className={styles.stack}>
-        <Grid container xs={8}>
-          <Grid display="flex" xs={4}>
-            <h2>Original Array</h2>
+    <SortingStateProvider>
+      <Box>
+        <h1>Insertion Algorithm</h1>
+        <Grid container spacing={2} marginTop="15px" className={styles.stack}>
+          <Grid container xs={8}>
+            <Grid display="flex" xs={4}>
+              <h2>Original Array</h2>
+            </Grid>
+            <Grid xs={8}>
+              <List className={styles.list} items={originalItems} />
+            </Grid>
           </Grid>
-          <Grid xs={8}>
-            <List className={styles.list} items={originalItems} />
-          </Grid>
-        </Grid>
-        <Grid container xs={11} className={styles.controllers}>
-          <Grid xs={3}>
-            <SortTypeSelector
-              value={sortingType}
-              onChange={(value) => setSortingType(value)}
-            />
-          </Grid>
-          <Grid xs={3}>
-            <Button variant="contained" color="info" onClick={onShuffle}>
-              Shuffle Array
-            </Button>
-          </Grid>
-          <Grid xs={3}>
-            <Button
-              disabled={items.every(
-                (value, index) => originalItems[index] === value
-              )}
-              variant="contained"
-              color={isSorting ? "error" : "primary"}
-              onClick={onSort}
-            >
-              {isSorting ? "Stop sorting" : "Sort Array"}
-            </Button>
-          </Grid>
-          <Grid xs={3}>
-            <Button variant="contained" color="warning" onClick={onReset}>
-              Reset Array
-            </Button>
-          </Grid>
-          {sortingType === "staged automatic" && (
-            <Grid container xs={8} padding="3rem">
-              <TimeSlider
-                value={stagingSpeed}
-                onChange={(event, value) => {
-                  if (typeof value === "number") setStagingSpeed(value);
-                }}
-                disabled={isSorting}
+          <Grid container xs={11} className={styles.controllers}>
+            <Grid xs={3}>
+              <SortTypeSelector
+                value={sortingType}
+                onChange={(value) => setSortingType(value)}
               />
             </Grid>
-          )}
-          {sortingStages.length > 1 && (
-            <Grid container xs={8} className={styles.stages}>
-              <Grid
-                xs={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+            <Grid xs={3}>
+              <Button variant="contained" color="info" onClick={onShuffle}>
+                Shuffle Array
+              </Button>
+            </Grid>
+            <Grid xs={3}>
+              <Button
+                disabled={items.every(
+                  (value, index) => originalItems[index] === value
+                )}
+                variant="contained"
+                color={isSorting ? "error" : "primary"}
+                onClick={onSort}
               >
-                <Typography>Stages</Typography>
-              </Grid>
-              <Grid xs={10}>
-                <Pagination
-                  disabled={sortingType !== "staged manual"}
-                  hideNextButton={sortingType !== "staged manual"}
-                  hidePrevButton={sortingType !== "staged manual"}
-                  color="primary"
-                  boundaryCount={2}
-                  count={sortingStages.length}
-                  page={currentStage}
-                  onChange={onStageChange}
+                {isSorting ? "Stop sorting" : "Sort Array"}
+              </Button>
+            </Grid>
+            <Grid xs={3}>
+              <Button variant="contained" color="warning" onClick={onReset}>
+                Reset Array
+              </Button>
+            </Grid>
+            {sortingType === "staged automatic" && (
+              <Grid container xs={8} padding="3rem">
+                <TimeSlider
+                  value={stagingSpeed}
+                  onChange={(event, value) => {
+                    if (typeof value === "number") setStagingSpeed(value);
+                  }}
+                  disabled={isSorting}
                 />
               </Grid>
+            )}
+            {sortingStages.length > 1 && (
+              <Grid container xs={8} className={styles.stages}>
+                <Grid
+                  xs={2}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Typography>Stages</Typography>
+                </Grid>
+                <Grid xs={10}>
+                  <Pagination
+                    disabled={sortingType !== "staged manual"}
+                    hideNextButton={sortingType !== "staged manual"}
+                    hidePrevButton={sortingType !== "staged manual"}
+                    color="primary"
+                    boundaryCount={2}
+                    count={sortingStages.length}
+                    page={currentStage}
+                    onChange={onStageChange}
+                  />
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+          <Grid container xs={8}>
+            <Grid display="flex" xs={4}>
+              <h2>Numbers Array</h2>
             </Grid>
-          )}
-        </Grid>
-        <Grid container xs={8}>
-          <Grid display="flex" xs={4}>
-            <h2>Numbers Array</h2>
-          </Grid>
-          <Grid xs={8}>
-            <List className={styles.list} items={items} />
+            <Grid xs={8}>
+              <List className={styles.list} items={items} />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </SortingStateProvider>
   );
 };
 
