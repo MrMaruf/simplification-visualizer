@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
+import { SortingStateProvider } from "@/store/SortingContext";
 import Container from "@mui/material/Container";
 
 export default function RootLayout({
@@ -9,9 +10,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container>
-      <Header />
-      {children}
-    </Container>
+    <SortingStateProvider>
+      <Container>
+        <Header />
+        {children}
+      </Container>
+    </SortingStateProvider>
   );
 }
