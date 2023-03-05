@@ -1,3 +1,11 @@
 .controllers {
-    align-items: center;
+  align-items: center;
+
+  h2 {
+    align-self: center;
   }
+  
+  button {
+    width: 100%;
+  }
+}
