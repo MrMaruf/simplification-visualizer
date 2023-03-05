@@ -1,7 +1,7 @@
 import ContextProviderNotFoundError from "@/errors/ContextProviderNotFoundError";
 import React from "react";
 
-import contextReducer, { Action, State } from "./SortingReducer";
+import contextReducer, { Action, generateArray, State } from "./SortingReducer";
 
 type Dispatch = (action: Action) => void;
 
@@ -16,7 +16,7 @@ function SortingStateProvider({ children }: ContextProviderProps) {
     sortingType: "realtime",
     sortingStages: [],
     currentStage: 0,
-    items: [],
+    items: generateArray(10),
     stagingSpeed: 300,
   };
   const [state, dispatch] = React.useReducer(contextReducer, initialState);
