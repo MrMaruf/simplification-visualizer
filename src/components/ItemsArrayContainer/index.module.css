@@ -1,15 +1,13 @@
 .list {
-    margin: 10px 0px;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-  
-    > li {
-      span {
-        width: 24px;
-        height: 24px;
-        text-align: center;
-      }
+  margin: 10px 0px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  > li {
+    div > div > span {
+      width: 24px;
+      height: 24px;
+      text-align: center;
     }
   }
-  
+}
