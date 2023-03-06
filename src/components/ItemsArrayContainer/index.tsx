@@ -16,7 +16,7 @@ const ItemsArrayContainer = (props: Props) => {
   const { array, name } = props;
   return (
     <Grid container xs={8}>
-      <Grid display="flex" xs={4}>
+      <Grid display="flex" alignItems="center" xs={4}>
         <h2>{name}</h2>
       </Grid>
       <Grid xs={8}>
