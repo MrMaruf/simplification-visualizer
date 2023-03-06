@@ -26,7 +26,18 @@ const List = (props: Props & StyleProps) => {
     </MaterialList>
   );
   if (typeof items[0] === "object" && "url" in items[0]) return base;
-  return <Flipper flipKey={items.join("")}>{base}</Flipper>;
+  return (
+    <Flipper
+      flipKey={items
+        .map((value) => {
+          if (typeof value === "object") return value.name;
+          return value;
+        })
+        .join("")}
+    >
+      {base}
+    </Flipper>
+  );
 };
 
 export default List;

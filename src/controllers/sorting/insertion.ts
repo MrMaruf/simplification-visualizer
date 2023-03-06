@@ -1,11 +1,13 @@
-export const sortArray = (toSort: number[]) => {
+import { Item } from "@/types/store/SortingTypes";
+
+export const sortArray = (toSort: Item[]) => {
   const length = toSort.length;
   for (let index = 1; index < length; index++) {
     let index2 = index;
     do {
       let elementLeft = toSort[index2 - 1];
       let elementRight = toSort[index2];
-      if (elementLeft < elementRight) break;
+      if (elementLeft.name < elementRight.name) break;
       toSort[index2] = elementLeft;
       toSort[index2 - 1] = elementRight;
       index2--;
@@ -14,15 +16,15 @@ export const sortArray = (toSort: number[]) => {
   return toSort;
 };
 
-export const stagedSortArray = (toSort: number[]) => {
-  const stages: number[][] = [];
+export const stagedSortArray = (toSort: Item[]) => {
+  const stages: Item[][] = [];
   const length = toSort.length;
   for (let index = 1; index < length; index++) {
     let index2 = index;
     do {
       let elementLeft = toSort[index2 - 1];
       let elementRight = toSort[index2];
-      if (elementLeft < elementRight) break;
+      if (elementLeft.name < elementRight.name) break;
       stages.push([...toSort]);
       toSort[index2] = elementLeft;
       toSort[index2 - 1] = elementRight;

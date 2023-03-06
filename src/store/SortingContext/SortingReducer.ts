@@ -20,7 +20,11 @@ export type State = {
 };
 
 export const generateArray = (length: number) =>
-  Array.from(new Array(length), (x, i) => i + 1);
+  Array.from(new Array(length), (x, i) => i + 1).map((value) => {
+    return {
+      name: value,
+    };
+  });
 
 function shuffleArray(array: any[]) {
   for (let i = array.length - 1; i > 0; i--) {
