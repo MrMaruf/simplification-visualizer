@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import styles from "./index.module.css";
 import { useSortingState } from "@/store/SortingContext";
 import { Items } from "@/types/store/SortingTypes";
+import SortingType from "@/types/SortType";
 
 type Props = {
   originalItems: Items;
@@ -64,18 +65,17 @@ const SortingControls = (props: Props) => {
   const onStageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     sortingCtx.dispatch({ type: "move stage", newStage: value });
   };
+  const onSortingTypeChange = (value: SortingType) => {
+    clearSortingInterval();
+    sortingCtx.dispatch({
+      type: "change sorting type",
+      newType: value,
+    });
+  };
   return (
     <Grid container xs={11} className={styles.controllers}>
       <Grid xs={3}>
-        <SortTypeSelector
-          value={sortingType}
-          onChange={(value) =>
-            sortingCtx.dispatch({
-              type: "change sorting type",
-              newType: value,
-            })
-          }
-        />
+        <SortTypeSelector value={sortingType} onChange={onSortingTypeChange} />
       </Grid>
       <Grid xs={3}>
         <Button variant="contained" color="info" onClick={onShuffle}>
