@@ -7,10 +7,11 @@ import Box from "@mui/material/Box";
 import Page from "@/types/Page";
 import ListItem from "./Item";
 import StyleProps from "@/types/BaseProps/StyleProps";
-import { Flipped, Flipper } from "react-flip-toolkit";
+import { Flipper } from "react-flip-toolkit";
+import { Items } from "@/types/store/SortingTypes";
 
 type Props = {
-  items: Page[] | string[] | number[];
+  items: Page[] | string[] | number[] | Items;
 };
 
 const List = (props: Props & StyleProps) => {
@@ -24,7 +25,7 @@ const List = (props: Props & StyleProps) => {
       })}
     </MaterialList>
   );
-  if ("url" in items) return base;
+  if (typeof items[0] === "object" && "url" in items[0]) return base;
   return <Flipper flipKey={items.join("")}>{base}</Flipper>;
 };
 
