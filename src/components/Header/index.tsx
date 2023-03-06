@@ -22,9 +22,9 @@ const pages: Page[] = [
 type Props = {};
 
 const Header = (props: Props) => {
-  const path = usePathname();
+  const fullPath = usePathname();
   // console.log("'", path, "'");
-  const navigation = path?.split("/");
+  const navigation = fullPath?.split("/");
   // console.log(navigation);
 
   return (
@@ -37,12 +37,13 @@ const Header = (props: Props) => {
             </Link>
             {navigation?.map((path, index) => {
               const trimmedPath = path.trim();
+              const absolutePath = fullPath?.split(path)[0] + path
               if (trimmedPath.length > 0)
                 return (
                   <Link
                     underline="hover"
                     color="inherit"
-                    href={path}
+                    href={absolutePath}
                     key={path}
                   >
                     {trimmedPath}
