@@ -9,13 +9,13 @@ import Typography from "@mui/material/Typography";
 
 import styles from "./index.module.css";
 import { useSortingState } from "@/store/SortingContext";
-import { Items } from "@/types/store/SortingTypes";
+import { Item, Stage } from "@/types/store/SortingTypes";
 import SortingType from "@/types/SortType";
 
 type Props = {
-  originalItems: Items;
-  stagedSortArray: (items: Items) => Items[];
-  sortArray: (items: Items) => Items;
+  originalItems: Item[];
+  stagedSortArray: (items: Item[]) => Stage[];
+  sortArray: (items: Item[]) => Item[];
 };
 
 const SortingControls = (props: Props) => {

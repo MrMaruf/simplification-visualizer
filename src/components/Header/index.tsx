@@ -28,29 +28,29 @@ const Header = (props: Props) => {
   // console.log(navigation);
 
   return (
-    <AppBar className={styles.header} position="static">
-      <Container maxWidth="xl">
-        <Stack>
-          <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
-            <Link underline="hover" color="inherit" href="/">
-              Visual Simplifier
-            </Link>
-            {navigation?.map((path, index) => {
-              const trimmedPath = path.trim();
-              const absolutePath = fullPath?.split(path)[0] + path
-              if (trimmedPath.length > 0)
-                return (
-                  <Link
-                    underline="hover"
-                    color="inherit"
-                    href={absolutePath}
-                    key={path}
-                  >
-                    {trimmedPath}
-                  </Link>
-                );
-            })}
-          </Breadcrumbs>
+    <React.Fragment>
+      <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
+        <Link underline="hover" color="inherit" href="/">
+          Visual Simplifier
+        </Link>
+        {navigation?.map((path, index) => {
+          const trimmedPath = path.trim();
+          const absolutePath = fullPath?.split(path)[0] + path;
+          if (trimmedPath.length > 0)
+            return (
+              <Link
+                underline="hover"
+                color="inherit"
+                href={absolutePath}
+                key={path}
+              >
+                {trimmedPath}
+              </Link>
+            );
+        })}
+      </Breadcrumbs>
+      <AppBar className={styles.header} position="static">
+        <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
               variant="h5"
@@ -83,9 +83,9 @@ const Header = (props: Props) => {
               ))}
             </Box>
           </Toolbar>
-        </Stack>
-      </Container>
-    </AppBar>
+        </Container>
+      </AppBar>
+    </React.Fragment>
   );
 };
 

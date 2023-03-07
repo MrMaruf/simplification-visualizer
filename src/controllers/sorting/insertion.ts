@@ -1,4 +1,4 @@
-import { Item } from "@/types/store/SortingTypes";
+import { Item, Stage } from "@/types/store/SortingTypes";
 
 export const sortArray = (toSort: Item[]) => {
   const length = toSort.length;
@@ -16,8 +16,12 @@ export const sortArray = (toSort: Item[]) => {
   return toSort;
 };
 
-export const stagedSortArray = (toSort: Item[]) => {
-  const stages: Item[][] = [];
+export const stagedSortArray = (
+  comparingItemClass: string,
+  comparableItemClass: string,
+  toSort: Item[]
+) => {
+  const stages: Stage[] = [];
   const length = toSort.length;
   for (let index = 1; index < length; index++) {
     let index2 = index;
@@ -25,12 +29,24 @@ export const stagedSortArray = (toSort: Item[]) => {
       let elementLeft = toSort[index2 - 1];
       let elementRight = toSort[index2];
       if (elementLeft.name < elementRight.name) break;
-      stages.push([...toSort]);
+      const stage: Stage = {
+        name: "Swapping",
+        description: `Swapping ${elementRight} with ${elementLeft}`,
+        followUp: `Proceed to the next number`,
+        items: [...toSort],
+      };
+      stages.push(stage);
       toSort[index2] = elementLeft;
       toSort[index2 - 1] = elementRight;
       index2--;
     } while (index2 > 0);
   }
-  stages.push([...toSort]); // add last stage
+  const stage: Stage = {
+    name: "Swapping",
+    description: `Swapping last element`,
+    followUp: `Proceed to the next number`,
+    items: [...toSort],
+  };
+  stages.push(stage); // add last stage
   return stages;
 };

@@ -1,20 +1,20 @@
 import UnhandledActionTypeError from "@/errors/UnhandeledActionTypeError";
 import SortingType from "@/types/SortType";
-import { Items } from "@/types/store/SortingTypes";
+import { Item, Items, Stage } from "@/types/store/SortingTypes";
 
 export type Action =
   | { type: "shuffle array" }
   | { type: "generate array"; length: number }
   | { type: "change sorting type"; newType: SortingType }
   | { type: "change sorting speed"; newSpeed: number }
-  | { type: "set items"; items: Items }
-  | { type: "set stages"; stages: Items[] }
+  | { type: "set items"; items: Item[] }
+  | { type: "set stages"; stages: Stage[] }
   | { type: "move stage"; newStage?: number; onEnd?: () => void };
 
 export type State = {
   sortingType: SortingType;
   items: Items;
-  sortingStages: Items[];
+  sortingStages: Stage[];
   stagingSpeed: number;
   currentStage: number;
 };
@@ -85,7 +85,7 @@ export default function contextReducer(state: State, action: Action): State {
         onEnd();
       }
       const selectedStage = state.sortingStages[newStage - 1];
-      return { ...state, currentStage: newStage, items: selectedStage };
+      return { ...state, currentStage: newStage, items: selectedStage.items };
     }
     default: {
       throw new UnhandledActionTypeError(action);

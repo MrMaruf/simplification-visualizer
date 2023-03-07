@@ -8,6 +8,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useMemo } from "react";
 
+import styles from './index.module.css'
+
 type Props = {};
 
 //TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
@@ -25,7 +27,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
         <ItemsArrayContainer name="Original Array" array={originalItems} />
         <SortingControls
           sortArray={sortArray}
-          stagedSortArray={stagedSortArray}
+          stagedSortArray={stagedSortArray.bind(null, styles.comparingItem, styles.comparableItem)}
           originalItems={originalItems}
         />
         <ItemsArrayContainer name="Numbers Array" array={items} />
