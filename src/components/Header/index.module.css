@@ -1,5 +1,5 @@
 .header {
-  margin:1rem 0;
+  margin: 1rem 0;
   max-width: var(--max-width);
 
   a {
@@ -23,12 +23,12 @@
 }
 
 .breadcrumbs {
-
-  ol > li{
+  ol > li {
     text-transform: capitalize;
     font-size: 1.1rem;
     &:last-child {
-    font-weight: 700;}
+      font-weight: 700;
+    }
   }
 }
 
