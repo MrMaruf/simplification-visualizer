@@ -1,7 +1,8 @@
-.comparingItem{
-
+.comparingItem {
+  background: gray;
 }
 
-.comparableItem{
-    
+.comparableItem {
+  background: white;
+  color: black;
 }
