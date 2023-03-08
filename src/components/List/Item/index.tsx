@@ -10,6 +10,7 @@ import StyleProps from "@/types/BaseProps/StyleProps";
 type Props = {
   name: string | number;
   url?: string;
+  description?: string;
 };
 
 const ListItem = (props: Props & StyleProps) => {
@@ -37,7 +38,7 @@ const ListItem = (props: Props & StyleProps) => {
         style={props.style}
       >
         <ListItemButton>
-          <ListItemText primary={props.name} />
+          <ListItemText primary={props.name} secondary={props.description}/>
         </ListItemButton>
       </MaterialListItem>
     </Flipped>
