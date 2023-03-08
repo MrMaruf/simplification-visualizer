@@ -9,3 +9,8 @@
     width: 100%;
   }
 }
+
+.stages {
+  max-height: 30vh;
+  overflow-y: auto;
+}
