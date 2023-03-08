@@ -10,8 +10,14 @@ import StyleProps from "@/types/BaseProps/StyleProps";
 import { Flipper } from "react-flip-toolkit";
 import { Items } from "@/types/store/SortingTypes";
 
+type ListItem = {
+  name: string;
+  url?: string;
+  description?: string;
+};
+
 type Props = {
-  items: Page[] | string[] | number[] | Items;
+  items: string[] | number[] | ListItem[];
 };
 
 const List = (props: Props & StyleProps) => {
