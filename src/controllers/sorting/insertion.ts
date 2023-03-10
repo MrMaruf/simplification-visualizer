@@ -15,7 +15,7 @@ export const sortArray = (toSort: Item[]) => {
   }
   return toSort;
 };
-
+//TODO: Find a way to optimize the method
 export const stagedSortArray = (
   comparingItemClass: string,
   comparableItemClass: string,
@@ -28,20 +28,21 @@ export const stagedSortArray = (
     do {
       let elementLeft: Item = toSort[index2 - 1];
       let elementRight: Item = toSort[index2];
-      elementLeft.className = comparableItemClass;
-      elementRight.className = comparingItemClass;
+      const toSortCopy:Item[] = [...toSort];
+      toSortCopy[index2-1] = {...elementLeft, className:comparableItemClass}
+      toSortCopy[index2] = {...elementRight, className:comparingItemClass}
       const preCompareStage: Stage = {
-        name: "Swapping",
+        name: `Comparing ${elementRight.name} > ${elementLeft.name}`,
         description: `Comparing current item(${elementRight.name}) with previous item(${elementLeft.name})`,
         followUp: `If current item is less than previous one, swap, otherwise proceed.`,
-        items: [...toSort],
+        items: toSortCopy,
       };
       stages.push(preCompareStage);
-      if (elementLeft.name < elementRight.name) break;
+      if (elementRight.name > elementLeft.name) break;
       toSort[index2] = elementLeft;
       toSort[index2 - 1] = elementRight;
       const swappingStage: Stage = {
-        name: "Swapping",
+        name: `Swapping ${elementRight.name} & ${elementLeft.name}`,
         description: `Swapping ${elementRight.name} with ${elementLeft.name}`,
         followUp: `Proceed to the next number`,
         items: [...toSort],
@@ -51,13 +52,13 @@ export const stagedSortArray = (
       stages.push(swappingStage);
       index2--;
     } while (index2 > 0);
-  }
+  }// add last stage
   const lastStage: Stage = {
-    name: "Swapping",
-    description: `Swapping last element`,
-    followUp: `Proceed to the next number`,
-    items: [...toSort],
+    name: `Finished`,
+    description: `Sorting is done`,
+    followUp: `None...`,
+    items: toSort,
   };
-  stages.push(lastStage); // add last stage
+  stages.push(lastStage);
   return stages;
 };
