@@ -7,6 +7,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { Flipped } from "react-flip-toolkit";
 import StyleProps from "@/types/BaseProps/StyleProps";
 
+import styles from "./index.module.css";
+
 type Props = {
   name: string | number;
   url?: string;
@@ -20,7 +22,7 @@ const ListItem = (props: Props & StyleProps) => {
       <Flipped key={name} flipId={name}>
         <MaterialListItem
           disablePadding
-          className={props.className ?? ""}
+          className={styles.item + " " + props.className ?? ""}
           style={props.style}
         >
           <ListItemButton href={href}>
@@ -34,11 +36,11 @@ const ListItem = (props: Props & StyleProps) => {
     <Flipped key={name} flipId={name}>
       <MaterialListItem
         disablePadding
-        className={props.className ?? ""}
+        className={styles.item + " " + props.className ?? ""}
         style={props.style}
       >
         <ListItemButton>
-          <ListItemText primary={props.name} secondary={props.description}/>
+          <ListItemText primary={props.name} secondary={props.description} />
         </ListItemButton>
       </MaterialListItem>
     </Flipped>
