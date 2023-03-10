@@ -2,7 +2,6 @@ import React from "react";
 
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-
 type Props = {
   value: number;
   onChange?: (
@@ -28,6 +27,7 @@ const marks = [
   },
 ];
 
+//TODO: Optimize on change. At the moment it runs way too often. Maybe with timeout?
 const TimeSlider = (props: Props) => {
   return (
     <React.Fragment>
