@@ -29,12 +29,11 @@ const StagedControls = (props: Props) => {
           <Grid container xs={12} padding="3rem">
             <TimeSlider
               value={stagingSpeed}
-              onChange={(event, value) => {
-                if (typeof value === "number")
-                  sortingCtx.dispatch({
-                    type: "change sorting speed",
-                    newSpeed: value,
-                  });
+              onValueChange={(value) => {
+                sortingCtx.dispatch({
+                  type: "change sorting speed",
+                  newSpeed: value,
+                });
               }}
               disabled={isSorting}
             />

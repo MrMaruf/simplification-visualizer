@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 type Props = {
   value: number;
+  onValueChange?: (value: number) => void;
   onChange?: (
     event: Event,
     value: number | number[],
@@ -29,6 +30,24 @@ const marks = [
 
 //TODO: Optimize on change. At the moment it runs way too often. Maybe with timeout?
 const TimeSlider = (props: Props) => {
+  const changeFinishedTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+  const { onValueChange, onChange, value: passedValue, disabled } = props;
+  const [value, setValue] = useState(passedValue);
+
+  const clearChangeTimeout = () => {
+    if (changeFinishedTimeout.current)
+      clearTimeout(changeFinishedTimeout.current);
+  };
+
+  const startChangeTimeout = (value: number) => {
+    if (!onValueChange) return;
+    clearChangeTimeout();
+    const timeout = setTimeout(() => {
+      onValueChange(value);
+    }, 400);
+    changeFinishedTimeout.current = timeout;
+  };
+
   return (
     <React.Fragment>
       <Typography id="sorting-speed" gutterBottom>
@@ -40,7 +59,15 @@ const TimeSlider = (props: Props) => {
         min={100}
         max={1000}
         marks={marks}
-        {...props}
+        value={value}
+        disabled={disabled}
+        onChange={(event, value, activeThumb) => {
+          if (onChange) onChange(event, value, activeThumb);
+          if (typeof value === "number") {
+            setValue(value);
+            startChangeTimeout(value);
+          }
+        }}
       />
       {props.value < 300 && (
         <Typography id="warning-text" color="orange" gutterBottom>
