@@ -9,6 +9,7 @@ import TimeSlider from "@/components/TimeSlider";
 
 import { useSortingState } from "@/store/SortingContext";
 import List from "@/components/List";
+import DetailedStageList from "./StagesList";
 
 type Props = {
   isSorting: boolean;
@@ -39,28 +40,31 @@ const StagedControls = (props: Props) => {
             />
           </Grid>
         )}
-        {sortingStages.length > 1 && (
-          <React.Fragment>
-            <Grid xs={12}>
-              <Typography variant="h4" margin="1rem">Stages</Typography>
-              <Pagination
-                disabled={sortingType !== "staged manual"}
-                hideNextButton={sortingType !== "staged manual"}
-                hidePrevButton={sortingType !== "staged manual"}
-                color="primary"
-                boundaryCount={2}
-                count={sortingStages.length}
-                page={currentStage}
-                
-                onChange={onStageChange}
-              />
-            </Grid>
-            <Grid xs={12} className={styles.pagination}>
-              <List items={sortingStages} />
-            </Grid>
-          </React.Fragment>
-        )}
       </Grid>
+      {sortingStages.length > 1 && (
+        <React.Fragment>
+          <Grid xs={12}>
+            <Typography variant="h4" margin="1rem">
+              Stages
+            </Typography>
+            <Pagination
+              disabled={sortingType !== "staged manual"}
+              hideNextButton={sortingType !== "staged manual"}
+              hidePrevButton={sortingType !== "staged manual"}
+              color="primary"
+              boundaryCount={2}
+              count={sortingStages.length}
+              page={currentStage}
+              onChange={onStageChange}
+            />
+          </Grid>
+          <Grid xs={12} className={styles.pagination}>
+            <div>
+              <DetailedStageList />
+            </div>
+          </Grid>
+        </React.Fragment>
+      )}
     </Grid>
   );
 };
