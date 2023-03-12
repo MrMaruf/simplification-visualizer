@@ -1,4 +1,21 @@
 .stages {
-  max-height: 30vh;
   overflow-y: auto;
+}
+
+.pagination{
+  box-sizing: border-box;
+  > div{
+    max-width: 85vw;
+    width: var(--max-width);
+    overflow-x: scroll;
+  }
+  ul{
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+    li{
+      min-width: 250px;
+      width: max-content;
+    }
+  }
 }
