@@ -5,8 +5,8 @@
 .pagination {
   box-sizing: border-box;
   > div {
-      max-width: 80vw;
-      overflow-x: scroll;
+    max-width: 80vw;
+    overflow-x: scroll;
   }
   ul {
     width: max-content;
@@ -14,7 +14,7 @@
     flex-direction: row;
     li {
       min-width: 250px;
-      width: max-content;
+      width: 250px;
     }
   }
 }
