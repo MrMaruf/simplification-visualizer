@@ -43,26 +43,30 @@ const StagedControls = (props: Props) => {
       </Grid>
       {sortingStages.length > 1 && (
         <React.Fragment>
-          <Grid xs={12}>
-            <Typography variant="h4" margin="1rem">
-              Stages
-            </Typography>
-            <Pagination
-              disabled={sortingType !== "staged manual"}
-              hideNextButton={sortingType !== "staged manual"}
-              hidePrevButton={sortingType !== "staged manual"}
-              color="primary"
-              boundaryCount={2}
-              count={sortingStages.length}
-              page={currentStage}
-              onChange={onStageChange}
-            />
-          </Grid>
-          <Grid xs={12} className={styles.pagination}>
-            <div>
-              <DetailedStageList />
-            </div>
-          </Grid>
+          {sortingType === "staged manual" && (
+            <Grid xs={12}>
+              <Typography variant="h4" margin="1rem">
+                Stages
+              </Typography>
+              <Pagination
+                disabled={sortingType !== "staged manual"}
+                hideNextButton={sortingType !== "staged manual"}
+                hidePrevButton={sortingType !== "staged manual"}
+                color="primary"
+                boundaryCount={2}
+                count={sortingStages.length}
+                page={currentStage}
+                onChange={onStageChange}
+              />
+            </Grid>
+          )}
+          {sortingType === "staged automatic" && (
+            <Grid xs={12} className={styles.pagination}>
+              <div>
+                <DetailedStageList />
+              </div>
+            </Grid>
+          )}
         </React.Fragment>
       )}
     </Grid>
