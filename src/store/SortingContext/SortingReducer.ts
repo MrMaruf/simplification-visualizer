@@ -37,7 +37,8 @@ export default function contextReducer(state: State, action: Action): State {
   switch (action.type) {
     case "shuffle array": {
       const { items } = state;
-      const shuffledItems = shuffleArray([...items]);
+      const regeneratedArray = generateArray(items.length);
+      const shuffledItems = shuffleArray(regeneratedArray);
       return {
         ...state,
         items: shuffledItems,
