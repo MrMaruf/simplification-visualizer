@@ -1,8 +1,10 @@
 .comparingItem {
-  background: gray;
+  
+  background: white;
+  color:black;
 }
 
 .comparableItem {
-  background: white;
+  background: orange;
   color: black;
 }
