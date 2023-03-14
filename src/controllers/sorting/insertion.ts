@@ -37,7 +37,7 @@ export const stagedSortArray = (
       };
       toSortCopy[index] = { ...elementRight, className: comparingItemClass };
       const preCompareStage: Stage = {
-        name: `Comparing ${elementRight.name} > ${elementLeft.name}`,
+        name: `Comparing ${elementRight.name} < ${elementLeft.name}`,
         description: `Comparing current item(${elementRight.name}) with previous item(${elementLeft.name})`,
         followUp: `If current item is less than previous one, swap, otherwise proceed.`,
         items: toSortCopy,
