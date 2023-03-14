@@ -3,15 +3,16 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 
 import List from "@/components/List";
-import { Items } from "@/types/store/SortingTypes";
 
 import styles from "./index.module.css";
+import { Item } from "@/types/store/SortingTypes";
+import Stack from "@mui/material/Stack";
 
 type Props = {
-  array: Items;
+  array: Item[];
   name: string;
 };
-
+// TODO: Create an indicator under list
 const ItemsArrayContainer = (props: Props) => {
   const { array, name } = props;
   return (
@@ -20,7 +21,9 @@ const ItemsArrayContainer = (props: Props) => {
         <h2>{name}</h2>
       </Grid>
       <Grid xs={8}>
-        <List className={styles.list} items={array} />
+        <Stack>
+          <List className={styles.list} items={array} />
+        </Stack>
       </Grid>
     </Grid>
   );
