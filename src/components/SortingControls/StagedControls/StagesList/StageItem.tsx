@@ -32,7 +32,7 @@ const StageItem = (props: Props) => {
   return (
     <ListItem ref={itemRef}>
       <ListItemButton onClick={onClick} selected={currentStage === stageNumber}>
-        <ListItemText primary={stage.name} secondary={stage.description} />
+        <ListItemText primary={`${stageNumber}. ${stage.name}`} secondary={stage.description} />
       </ListItemButton>
     </ListItem>
   );
