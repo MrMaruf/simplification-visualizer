@@ -27,8 +27,6 @@ const marks = [
     label: "1s",
   },
 ];
-
-//TODO: Optimize on change. At the moment it runs way too often. Maybe with timeout?
 const TimeSlider = (props: Props) => {
   const changeFinishedTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
   const { onValueChange, onChange, value: passedValue, disabled } = props;
