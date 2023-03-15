@@ -11,7 +11,7 @@ import { Flipper } from "react-flip-toolkit";
 import { Items } from "@/types/store/SortingTypes";
 
 type ListItem = {
-  name: string;
+  name: string | number;
   url?: string;
   description?: string;
 };
