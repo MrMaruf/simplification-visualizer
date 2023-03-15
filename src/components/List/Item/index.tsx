@@ -26,7 +26,7 @@ const ListItem = (props: Props & StyleProps) => {
           style={props.style}
         >
           <ListItemButton href={href}>
-            <ListItemText primary={name} />
+            <ListItemText primary={name} secondary={props.description} />
           </ListItemButton>
         </MaterialListItem>
       </Flipped>
@@ -39,9 +39,7 @@ const ListItem = (props: Props & StyleProps) => {
         className={styles.item + " " + props.className ?? ""}
         style={props.style}
       >
-        <ListItemButton>
-          <ListItemText primary={props.name} secondary={props.description} />
-        </ListItemButton>
+        <ListItemText primary={props.name} secondary={props.description} />
       </MaterialListItem>
     </Flipped>
   );
