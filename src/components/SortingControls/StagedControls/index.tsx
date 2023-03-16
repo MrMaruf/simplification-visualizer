@@ -60,13 +60,11 @@ const StagedControls = (props: Props) => {
               />
             </Grid>
           )}
-          {sortingType === "staged automatic" && (
-            <Grid xs={12} className={styles.pagination}>
-              <div>
-                <DetailedStageList />
-              </div>
-            </Grid>
-          )}
+          <Grid xs={12} className={styles.pagination}>
+            <div>
+              <DetailedStageList />
+            </div>
+          </Grid>
         </React.Fragment>
       )}
     </Grid>
