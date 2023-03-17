@@ -17,18 +17,13 @@ const InsertionSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
   const { items } = sortingCtx.state;
 
-  const itemsLength = items.length;
-  const originalItems = useMemo(() => [...items], [itemsLength]);
-
   return (
     <Box>
       <h1>Insertion Algorithm</h1>
       <Grid container spacing={2} marginTop="15px">
-        <ItemsArrayContainer name="Original Array" array={originalItems} />
         <SortingControls
           sortArray={sortArray}
           stagedSortArray={stagedSortArray.bind(null, styles.comparingItem, styles.comparableItem)}
-          originalItems={originalItems}
         />
         <ItemsArrayContainer name="Numbers Array" array={items} />
       </Grid>
