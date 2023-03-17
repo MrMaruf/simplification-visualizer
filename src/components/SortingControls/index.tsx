@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import Grid from "@mui/material/Unstable_Grid2";
 import SortTypeSelector from "@/components/SortTypeSelector";
@@ -11,29 +11,28 @@ import List from "../List";
 import StagedControls from "./StagedControls";
 
 type Props = {
-  originalItems: Item[];
   stagedSortArray: (items: Item[]) => Stage[];
   sortArray: (items: Item[]) => Item[];
 };
 
 const SortingControls = (props: Props) => {
   const sortingCtx = useSortingState();
-  const { sortingType, items, stagingSpeed, sortingStages, currentStage } =
-    sortingCtx.state;
+  const { sortingType, items, stagingSpeed } = sortingCtx.state;
   const { stagedSortArray, sortArray } = props;
   const [isSorting, setIsSorting] = useState(false);
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
+  const originalItems: Item[] = useMemo(() => sortArray(items), [items.length]);
   const onReset = () => {
     sortingCtx.dispatch({ type: "generate array", length: 10 });
-  };
-  const onShuffle = () => {
-    clearSortingInterval();
-    sortingCtx.dispatch({ type: "shuffle array" });
   };
   const clearSortingInterval = () => {
     if (!sortingIntervalRef.current) return;
     clearInterval(sortingIntervalRef.current);
     setIsSorting(false);
+  };
+  const onShuffle = () => {
+    clearSortingInterval();
+    sortingCtx.dispatch({ type: "shuffle array" });
   };
   const onSort = () => {
     if (isSorting) return clearSortingInterval();
@@ -67,6 +66,9 @@ const SortingControls = (props: Props) => {
       newType: value,
     });
   };
+  const isSorted = items.every(
+    (value, index) => originalItems[index].name === value.name
+  );
   return (
     <Grid container xs={11} className={styles.controllers}>
       <Grid xs={3}>
@@ -79,9 +81,7 @@ const SortingControls = (props: Props) => {
       </Grid>
       <Grid xs={3}>
         <Button
-          disabled={items.every(
-            (value, index) => props.originalItems[index] === value
-          )}
+          disabled={isSorted}
           variant="contained"
           color={isSorting ? "error" : "primary"}
           onClick={onSort}
@@ -90,7 +90,12 @@ const SortingControls = (props: Props) => {
         </Button>
       </Grid>
       <Grid xs={3}>
-        <Button variant="contained" color="warning" onClick={onReset}>
+        <Button
+          disabled={isSorted}
+          variant="contained"
+          color="warning"
+          onClick={onReset}
+        >
           Reset Array
         </Button>
       </Grid>
