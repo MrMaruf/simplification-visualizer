@@ -6,9 +6,9 @@ import { sortArray, stagedSortArray } from "@/controllers/sorting/insertion";
 import { useSortingState } from "@/store/SortingContext";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import React, { useMemo } from "react";
+import React from "react";
 
-import styles from './index.module.css'
+import styles from "./index.module.css";
 
 type Props = {};
 
@@ -23,7 +23,11 @@ const InsertionSortingAlgorithm = (props: Props) => {
       <Grid container spacing={2} marginTop="15px">
         <SortingControls
           sortArray={sortArray}
-          stagedSortArray={stagedSortArray.bind(null, styles.comparingItem, styles.comparableItem)}
+          stagedSortArray={stagedSortArray.bind(
+            null,
+            styles.comparingItem,
+            styles.comparableItem
+          )}
         />
         <ItemsArrayContainer name="Numbers Array" array={items} />
       </Grid>
