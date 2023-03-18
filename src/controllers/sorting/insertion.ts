@@ -52,8 +52,6 @@ export const stagedSortArray = (
         followUp: `Proceed to the next number`,
         items: [...toSort],
       };
-      elementLeft.className = undefined;
-      elementRight.className = undefined;
       index2--;
     } while (index2 > 0);
     if (swappingStage) stages.push(swappingStage);
