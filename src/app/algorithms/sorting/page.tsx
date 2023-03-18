@@ -10,6 +10,7 @@ const basePath = "/algorithms/sorting";
 
 const pages: Page[] = [
   { name: "Insertion Algorithm", url: `${basePath}/insertion` },
+  { name: "Selection Algorithm", url: `${basePath}/selection` },
 ];
 const SortingAlgorithmsHome = (props: Props) => {
   return <List items={pages} />;
