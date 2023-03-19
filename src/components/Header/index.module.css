@@ -23,6 +23,7 @@
 }
 
 .breadcrumbs {
+  
   ol > li {
     text-transform: capitalize;
     font-size: 1.1rem;
@@ -33,6 +34,7 @@
 }
 
 @media (max-width: 1023px) {
+
   .header a {
     padding: 1rem;
   }
