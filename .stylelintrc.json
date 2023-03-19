@@ -6,7 +6,8 @@
       "plugins": ["stylelint-use-nesting"],
       "rules": {
         "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
-        "csstools/use-nesting": "always"
+        "csstools/use-nesting": "always",
+        "rule-empty-line-before": null
       }
     }
   ]
