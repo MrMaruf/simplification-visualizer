@@ -15,15 +15,27 @@ import ListItem from "@mui/material/ListItem";
 type Props = {
   array: Item[];
   name: string;
+  primaryArrowClass?: string;
+  secondaryArrowClass?: string;
+  infoArrowClass?: string;
 };
 // TODO: Create an indicator under list
 const ItemsArrayContainer = (props: Props) => {
-  const { array, name } = props;
+  const {
+    array,
+    name,
+    primaryArrowClass,
+    secondaryArrowClass,
+    infoArrowClass,
+  } = props;
   const arrowArray = array.map((item) => {
     const { className } = item;
     if (className) {
-      if (className.includes("comparing")) return "comparing";
-      // if (className.includes("comparable")) return "comparable";
+      if (primaryArrowClass && className.includes(primaryArrowClass))
+        return "primary";
+      if (secondaryArrowClass && className.includes(secondaryArrowClass))
+        return "secondary";
+      if (infoArrowClass && className.includes(infoArrowClass)) return "info";
     }
     return item.name;
   });
@@ -43,12 +55,9 @@ const ItemsArrayContainer = (props: Props) => {
             return (
               // <Flipped key={item} flipId={item}>
               <ListItem key={item}>
-                {item === "comparing" && (
-                  <ArrowDropUpIcon fontSize="large" color="primary" />
+                {typeof item === "string" && (
+                  <ArrowDropUpIcon fontSize="large" color={item} />
                 )}
-                {/* {item === "comparable" && (
-                      <ArrowDropUpIcon color="secondary" />
-                    )} */}
               </ListItem>
               // </Flipped>
             );

@@ -29,7 +29,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
             styles.comparableItem
           )}
         />
-        <ItemsArrayContainer name="Numbers Array" array={items} />
+        <ItemsArrayContainer primaryArrowClass={styles.comparingItem} name="Numbers Array" array={items} />
       </Grid>
     </Box>
   );
