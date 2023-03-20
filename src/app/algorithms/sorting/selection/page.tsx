@@ -26,10 +26,16 @@ const SelectionSortingAlgorithm = (props: Props) => {
           stagedSortArray={stagedSortArray.bind(
             null,
             styles.comparingItem,
-            styles.comparableItem
+            styles.comparableItem,
+            styles.currentMinimumIndex
           )}
         />
-        <ItemsArrayContainer name="Numbers Array" array={items} />
+        <ItemsArrayContainer
+          infoArrowClass={styles.currentMinimumIndex}
+          primaryArrowClass={styles.comparingItem}
+          name="Numbers Array"
+          array={items}
+        />
       </Grid>
     </Box>
   );
