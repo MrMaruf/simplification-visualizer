@@ -22,6 +22,7 @@ export const sortArray = (toSort: Item[]) => {
 export const stagedSortArray = (
   comparingItemClass: string,
   comparableItemClass: string,
+  currentMinimumIndexClass: string,
   toSort: Item[]
 ) => {
   const stages: Stage[] = [];
@@ -33,26 +34,45 @@ export const stagedSortArray = (
     let currentMinimumIndex = index;
     let swappingStage: Stage | undefined;
     const originalSortCopy = [...toSort];
+    originalSortCopy[index] = {
+      ...minimum,
+      className: currentMinimumIndexClass,
+    };
     let foundNewMinimum = false;
     do {
       let newElement = toSort[index2++];
-      const toSortCopy: Item[] = [...originalSortCopy];
-      toSortCopy[index2 - 1] = {
+      const preCheckList: Item[] = [...originalSortCopy];
+      preCheckList[index2 - 1] = {
         ...newElement,
         className: comparableItemClass,
       };
-      toSortCopy[index] = { ...minimum, className: comparingItemClass };
+      preCheckList[currentMinimumIndex] = {
+        ...minimum,
+        className: comparingItemClass,
+      };
       const preCompareStage: Stage = {
         name: `Comparing ${minimum.name} < ${newElement.name}`,
         description: `Comparing current item(${newElement.name}) with previous item(${minimum.name})`,
         followUp: `If current item is less than previous one, swap, otherwise proceed.`,
-        items: toSortCopy,
+        items: preCheckList,
       };
       stages.push(preCompareStage);
       if (minimum.name < newElement.name) continue;
       foundNewMinimum = true;
       currentMinimumIndex = index2 - 1;
       minimum = newElement;
+      const postCheckList: Item[] = [...originalSortCopy];
+      postCheckList[currentMinimumIndex] = {
+        ...minimum,
+        className: comparingItemClass,
+      };
+      const postCompareStage: Stage = {
+        name: `Found new minimum ${minimum.name}`,
+        description: `Moving comparing to new minimum`,
+        followUp: `Keep checking`,
+        items: postCheckList,
+      };
+      stages.push(postCompareStage);
     } while (index2 < length);
     if (!foundNewMinimum) continue;
     let previousMinimum = toSort[index];
