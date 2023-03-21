@@ -51,7 +51,7 @@ export const stagedSortArray = (
         className: comparingItemClass,
       };
       const preCompareStage: Stage = {
-        name: `Comparing ${minimum.name} < ${newElement.name}`,
+        name: `${minimum.name} < ${newElement.name}`,
         description: `Comparing current item(${newElement.name}) with previous item(${minimum.name})`,
         followUp: `If current item is less than previous one, swap, otherwise proceed.`,
         items: preCheckList,
@@ -67,8 +67,8 @@ export const stagedSortArray = (
         className: comparingItemClass,
       };
       const postCompareStage: Stage = {
-        name: `Found new minimum ${minimum.name}`,
-        description: `Moving comparing to new minimum`,
+        name: `Minimum -> ${minimum.name}`,
+        description: `Found new minimum value`,
         followUp: `Keep checking`,
         items: postCheckList,
       };
@@ -79,8 +79,8 @@ export const stagedSortArray = (
     toSort[index] = minimum;
     toSort[currentMinimumIndex] = previousMinimum;
     swappingStage = {
-      name: `Moving ${minimum.name} to the #${index} position`,
-      description: `New minimum found! Moving to the #${index} position.`,
+      name: `Moving ${minimum.name}`,
+      description: `Moving current minimum to #${index} position.`,
       followUp: `Proceed to the next number`,
       items: [...toSort],
     };
