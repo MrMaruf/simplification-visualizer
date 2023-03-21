@@ -11,7 +11,7 @@ const DetailedStageList = (props: Props) => {
   return (
     <List>
       {sortingStages.map((value, index) => (
-        <StageItem key={value.name} stage={value} stageNumber={index + 1} />
+        <StageItem key={index + value.name} stage={value} stageNumber={index + 1} />
       ))}
     </List>
   );
