@@ -49,21 +49,21 @@ const ItemsArrayContainer = (props: Props) => {
       </Grid>
       <Grid paddingTop="0" xs={4}></Grid>
       <Grid paddingTop="0" xs={8}>
-        {/* <Flipper flipKey={arrowArray.join("")} element={undefined}> */}
-        <MaterialList className={styles.arrowList}>
-          {arrowArray.map((item) => {
-            return (
-              // <Flipped key={item} flipId={item}>
-              <ListItem key={item}>
-                {typeof item === "string" && (
-                  <ArrowDropUpIcon fontSize="large" color={item} />
-                )}
-              </ListItem>
-              // </Flipped>
-            );
-          })}
-        </MaterialList>
-        {/* </Flipper> */}
+        <Flipper flipKey={arrowArray.join("")} element={undefined}>
+          <MaterialList className={styles.arrowList}>
+            {arrowArray.map((item) => {
+              return (
+                <Flipped key={item} flipId={item}>
+                  <ListItem key={item}>
+                    {typeof item === "string" && (
+                      <ArrowDropUpIcon fontSize="large" color={item} />
+                    )}
+                  </ListItem>
+                </Flipped>
+              );
+            })}
+          </MaterialList>
+        </Flipper>
       </Grid>
     </Grid>
   );
