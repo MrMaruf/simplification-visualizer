@@ -78,11 +78,22 @@ export const stagedSortArray = (
     let previousMinimum = toSort[index];
     toSort[index] = minimum;
     toSort[currentMinimumIndex] = previousMinimum;
+
+    const swapList: Item[] = [...toSort];
+    swapList[index] = {
+      ...minimum,
+      className: comparingItemClass,
+    };
+    if (index + 1 !== length)
+      swapList[index + 1] = {
+        ...swapList[index + 1],
+        className: currentMinimumIndexClass,
+      };
     swappingStage = {
       name: `Moving ${minimum.name}`,
       description: `Moving current minimum to #${index} position.`,
       followUp: `Proceed to the next number`,
-      items: [...toSort],
+      items: swapList,
     };
     stages.push(swappingStage);
   } // add last stage
