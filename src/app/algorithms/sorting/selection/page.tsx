@@ -12,7 +12,7 @@ import styles from "./index.module.css";
 
 type Props = {};
 
-//TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
+//TODO: Work out having styling from comparing, while having an arrow from another class
 const SelectionSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
   const { items } = sortingCtx.state;
