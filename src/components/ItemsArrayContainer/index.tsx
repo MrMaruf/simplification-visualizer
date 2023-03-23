@@ -15,9 +15,9 @@ import ListItem from "@mui/material/ListItem";
 type Props = {
   array: Item[];
   name: string;
-  primaryArrowClass?: string;
-  secondaryArrowClass?: string;
-  infoArrowClass?: string;
+  primaryArrowClass?: string[];
+  secondaryArrowClass?: string[];
+  infoArrowClass?: string[];
 };
 // TODO: Create an indicator under list
 const ItemsArrayContainer = (props: Props) => {
@@ -31,11 +31,21 @@ const ItemsArrayContainer = (props: Props) => {
   const arrowArray = array.map((item) => {
     const { className } = item;
     if (className) {
-      if (primaryArrowClass && className.includes(primaryArrowClass))
+      if (
+        primaryArrowClass &&
+        primaryArrowClass.some((value) => className.includes(value))
+      )
         return "primary";
-      if (secondaryArrowClass && className.includes(secondaryArrowClass))
+      if (
+        secondaryArrowClass &&
+        secondaryArrowClass.some((value) => className.includes(value))
+      )
         return "secondary";
-      if (infoArrowClass && className.includes(infoArrowClass)) return "info";
+      if (
+        infoArrowClass &&
+        infoArrowClass.some((value) => className.includes(value))
+      )
+        return "info";
     }
     return item.name;
   });

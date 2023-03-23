@@ -12,7 +12,6 @@ import styles from "./index.module.css";
 
 type Props = {};
 
-//TODO: Look into not only animating sorting process but only every step that goes before and after sorting.
 const InsertionSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
   const { items } = sortingCtx.state;
@@ -29,7 +28,7 @@ const InsertionSortingAlgorithm = (props: Props) => {
             styles.comparableItem
           )}
         />
-        <ItemsArrayContainer primaryArrowClass={styles.comparingItem} name="Numbers Array" array={items} />
+        <ItemsArrayContainer primaryArrowClass={[styles.comparingItem]} name="Numbers Array" array={items} />
       </Grid>
     </Box>
   );

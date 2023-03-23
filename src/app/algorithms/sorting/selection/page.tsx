@@ -12,11 +12,9 @@ import styles from "./index.module.css";
 
 type Props = {};
 
-//TODO: Work out having styling from comparing, while having an arrow from another class
 const SelectionSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
   const { items } = sortingCtx.state;
-
   return (
     <Box>
       <h1>Selection Algorithm</h1>
@@ -31,8 +29,8 @@ const SelectionSortingAlgorithm = (props: Props) => {
           )}
         />
         <ItemsArrayContainer
-          infoArrowClass={styles.currentMinimumIndex}
-          primaryArrowClass={styles.comparingItem}
+          secondaryArrowClass={[styles.currentMinimumIndex, styles.comparingItem]}
+          primaryArrowClass={[styles.comparingItem]}
           name="Numbers Array"
           array={items}
         />
