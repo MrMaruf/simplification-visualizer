@@ -13,7 +13,7 @@ const SortingStateContext = React.createContext<StateContextType | undefined>(
 
 function SortingStateProvider({ children }: ContextProviderProps) {
   const initialState: State = {
-    sortingType: "realtime",
+    sortingType: "staged manual",
     sortingStages: [],
     currentStage: 0,
     items: generateArray(10),
