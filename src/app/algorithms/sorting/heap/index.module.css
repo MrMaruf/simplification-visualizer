@@ -1,0 +1,14 @@
+.comparingItem {
+  background: white;
+  color: black;
+}
+
+.comparableItem {
+  background: orange;
+  color: black;
+}
+
+.currentMinimumIndex {
+  /* background: rgb(199, 199, 199);
+  color: black; */
+}
