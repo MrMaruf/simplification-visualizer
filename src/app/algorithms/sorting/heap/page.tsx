@@ -2,7 +2,7 @@
 
 import ItemsArrayContainer from "@/components/ItemsArrayContainer";
 import SortingControls from "@/components/SortingControls";
-import { sortArray, stagedSortArray } from "@/controllers/sorting/selection";
+import { sortArray, stagedSortArray } from "@/controllers/sorting/heap";
 import { useSortingState } from "@/store/SortingContext";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -17,7 +17,7 @@ const HeapSortingAlgorithm = (props: Props) => {
   const { items } = sortingCtx.state;
   return (
     <Box>
-      <h1>Selection Algorithm</h1>
+      <h1>Heap Sort Algorithm</h1>
       <Grid container spacing={2} marginTop="15px">
         <SortingControls
           sortArray={sortArray}
