@@ -37,7 +37,7 @@ export const sortArray = (toSort: Item[]) => {
   return toSort;
 };
 
-//TODO: Find a way to optimize the method
+//TODO: Implement staging sort
 export const stagedSortArray = (
   comparingItemClass: string,
   comparableItemClass: string,
