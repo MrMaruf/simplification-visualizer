@@ -12,6 +12,10 @@ import styles from "./index.module.css";
 
 type Props = {};
 
+//TODO: Find a way to create binary tree
+//TODO: Find a way to get stages to handle more than items for case like heap tree
+//TODO: Split into 2 stages? One for max heap tree & two for sorting
+
 const HeapSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
   const { items } = sortingCtx.state;
