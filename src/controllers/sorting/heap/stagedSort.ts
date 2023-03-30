@@ -1,39 +1,55 @@
 import { Item, Stage } from "@/types/store/SortingTypes";
 
 //TODO: Implement staging sort
-const swap = (toSort: Item[], index1: number, index2: number) => {
+const swap = (toSort: Item[], index1: number, index2: number):Stage => {
   const item1 = toSort[index1];
   const item2 = toSort[index2];
   toSort[index2] = item1;
   toSort[index1] = item2;
+  return {
+    name: `Swapping ${item1.name} & ${item2.name}`,
+    description: `Swapping ${item1.name} with ${item2.name}`,
+    followUp: `Move to next element in the heap.`,
+    items: [...toSort],
+  };
 };
 
 const heapify = (
   toSort: Item[],
   length: number,
   currentIndex: number,
-  stages: Stage[] = []
+  stages: Stage[] = [],
+  classes:
 ) => {
   let largest = currentIndex;
   const left = 2 * currentIndex + 1;
   const right = 2 * currentIndex + 2;
   const leftItem = toSort[left];
   const rightItem = toSort[right];
+  const compareItems = [...toSort]
+  compareItems[largest] = {
+    ...toSort[largest],
+
+  }
+  const compareStage = {
+
+  }
   if (left < length && toSort[largest].name < leftItem.name) largest = left;
 
   if (right < length && toSort[largest].name < rightItem.name) largest = right;
 
   // Swap and continue heapifying if root is not largest
   if (largest != currentIndex) {
-    swap(toSort, currentIndex, largest);
+    const swapStage = swap(toSort, currentIndex, largest)
+    stages.push(swapStage);
     heapify(toSort, length, largest, stages);
   }
 };
 
 const stagedSortArray = (
-  comparingItemClass: string,
-  comparableItemClass: string,
-  currentMinimumIndexClass: string,
+  parent: string,
+  right: string,
+  left: string,
   toSort: Item[]
 ) => {
   const stages: Stage[] = [];
@@ -56,7 +72,7 @@ const stagedSortArray = (
     const originalSortCopy = [...toSort];
     originalSortCopy[index] = {
       ...minimum,
-      className: currentMinimumIndexClass,
+      className: left,
     };
     let foundNewMinimum = false;
     do {
@@ -64,11 +80,11 @@ const stagedSortArray = (
       const preCheckList: Item[] = [...originalSortCopy];
       preCheckList[index2 - 1] = {
         ...newElement,
-        className: comparableItemClass,
+        className: right,
       };
       preCheckList[currentMinimumIndex] = {
         ...minimum,
-        className: comparingItemClass,
+        className: parent,
       };
       const preCompareStage: Stage = {
         name: `${minimum.name} < ${newElement.name}`,
@@ -84,7 +100,7 @@ const stagedSortArray = (
       const postCheckList: Item[] = [...originalSortCopy];
       postCheckList[currentMinimumIndex] = {
         ...minimum,
-        className: comparingItemClass,
+        className: parent,
       };
       const postCompareStage: Stage = {
         name: `Minimum -> ${minimum.name}`,
@@ -102,12 +118,12 @@ const stagedSortArray = (
     const swapList: Item[] = [...toSort];
     swapList[index] = {
       ...minimum,
-      className: comparingItemClass,
+      className: parent,
     };
     if (index + 1 !== length)
       swapList[index + 1] = {
         ...swapList[index + 1],
-        className: currentMinimumIndexClass,
+        className: left,
       };
     swappingStage = {
       name: `Moving ${minimum.name}`,
