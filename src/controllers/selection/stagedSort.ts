@@ -4,7 +4,7 @@ const stagedSortArray = (
   comparableItemClass: string,
   currentMinimumIndexClass: string,
   toSort: Item[]
-) => {
+):Stage[]  => {
   const stages: Stage[] = [];
   const length = toSort.length;
 
