@@ -1,7 +1,12 @@
 import { Item, Stage } from "@/types/store/SortingTypes";
 
 //TODO: Implement staging sort
-const swap = (toSort: Item[], index1: number, index2: number):Stage => {
+const swap = (
+  toSort: Item[],
+  index1: number,
+  index2: number,
+  stageToSort: Item[]
+): Stage => {
   const item1 = toSort[index1];
   const item2 = toSort[index2];
   toSort[index2] = item1;
@@ -10,7 +15,7 @@ const swap = (toSort: Item[], index1: number, index2: number):Stage => {
     name: `Swapping ${item1.name} & ${item2.name}`,
     description: `Swapping ${item1.name} with ${item2.name}`,
     followUp: `Move to next element in the heap.`,
-    items: [...toSort],
+    items: [...stageToSort],
   };
 };
 
@@ -19,39 +24,55 @@ const heapify = (
   length: number,
   currentIndex: number,
   stages: Stage[] = [],
-  classes:
+  parentClass: string,
+  rightClass: string,
+  leftClass: string
 ) => {
   let largest = currentIndex;
-  const left = 2 * currentIndex + 1;
-  const right = 2 * currentIndex + 2;
-  const leftItem = toSort[left];
-  const rightItem = toSort[right];
-  const compareItems = [...toSort]
+  const leftIndex = 2 * currentIndex + 1;
+  const rightIndex = 2 * currentIndex + 2;
+  const leftItem = toSort[leftIndex];
+  const rightItem = toSort[rightIndex];
+  const compareItems = [...toSort];
   compareItems[largest] = {
     ...toSort[largest],
-
-  }
+    className: parentClass,
+  };
+  compareItems[leftIndex] = {
+    ...toSort[leftIndex],
+    className: leftClass,
+  };
+  compareItems[rightIndex] = {
+    ...toSort[rightIndex],
+    className: rightClass,
+  };
   const compareStage = {
+    name: `Check parent versus children`,
+    description: `Comparing parent(${compareItems[largest].name}) with left(${leftItem.name}) & right(${rightItem.name}) nodes.`,
+    followUp: `If current item is less than previous one, swap, otherwise proceed.`,
+    items: compareItems,
+  };
+  stages.push(compareStage);
+  if (leftIndex < length && toSort[largest].name < leftItem.name)
+    largest = leftIndex;
 
-  }
-  if (left < length && toSort[largest].name < leftItem.name) largest = left;
-
-  if (right < length && toSort[largest].name < rightItem.name) largest = right;
+  if (rightIndex < length && toSort[largest].name < rightItem.name)
+    largest = rightIndex;
 
   // Swap and continue heapifying if root is not largest
   if (largest != currentIndex) {
-    const swapStage = swap(toSort, currentIndex, largest)
+    const swapStage = swap(toSort, currentIndex, largest);
     stages.push(swapStage);
     heapify(toSort, length, largest, stages);
   }
 };
 
 const stagedSortArray = (
-  parent: string,
-  right: string,
-  left: string,
+  parentClass: string,
+  rightClass: string,
+  leftClass: string,
   toSort: Item[]
-) => {
+): Stage[] => {
   const stages: Stage[] = [];
   const length = toSort.length;
   for (let index = length / 2; index > -1; index--) {
@@ -72,7 +93,7 @@ const stagedSortArray = (
     const originalSortCopy = [...toSort];
     originalSortCopy[index] = {
       ...minimum,
-      className: left,
+      className: leftClass,
     };
     let foundNewMinimum = false;
     do {
@@ -80,11 +101,11 @@ const stagedSortArray = (
       const preCheckList: Item[] = [...originalSortCopy];
       preCheckList[index2 - 1] = {
         ...newElement,
-        className: right,
+        className: rightClass,
       };
       preCheckList[currentMinimumIndex] = {
         ...minimum,
-        className: parent,
+        className: parentClass,
       };
       const preCompareStage: Stage = {
         name: `${minimum.name} < ${newElement.name}`,
@@ -100,7 +121,7 @@ const stagedSortArray = (
       const postCheckList: Item[] = [...originalSortCopy];
       postCheckList[currentMinimumIndex] = {
         ...minimum,
-        className: parent,
+        className: parentClass,
       };
       const postCompareStage: Stage = {
         name: `Minimum -> ${minimum.name}`,
@@ -118,12 +139,12 @@ const stagedSortArray = (
     const swapList: Item[] = [...toSort];
     swapList[index] = {
       ...minimum,
-      className: parent,
+      className: parentClass,
     };
     if (index + 1 !== length)
       swapList[index + 1] = {
         ...swapList[index + 1],
-        className: left,
+        className: leftClass,
       };
     swappingStage = {
       name: `Moving ${minimum.name}`,
