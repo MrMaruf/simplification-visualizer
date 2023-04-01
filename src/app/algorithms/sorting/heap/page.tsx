@@ -27,14 +27,14 @@ const HeapSortingAlgorithm = (props: Props) => {
           sortArray={sortArray}
           stagedSortArray={stagedSortArray.bind(
             null,
-            styles.comparingItem,
-            styles.comparableItem,
-            styles.currentMinimumIndex
+            styles.parent,
+            styles.right,
+            styles.left
           )}
         />
         <ItemsArrayContainer
-          secondaryArrowClass={[styles.currentMinimumIndex, styles.comparingItem]}
-          primaryArrowClass={[styles.comparingItem]}
+          // secondaryArrowClass={[styles.currentMinimumIndex, styles.comparingItem]}
+          primaryArrowClass={[styles.parent]}
           name="Numbers Array"
           array={items}
         />
