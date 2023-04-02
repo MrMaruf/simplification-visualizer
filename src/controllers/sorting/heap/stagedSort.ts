@@ -96,7 +96,7 @@ const stagedSortArray = (
     const stageToSort = [...toSort];
     swap(stageToSort, index, 0);
     const swapStage = {
-      name: `Swapping ${toSort[index].name} & ${toSort[0].name}`,
+      name: `Swapping index(${index}) with root`,
       description: `Swapping ${toSort[index].name} with ${toSort[0].name}`,
       followUp: `Move to next element in the heap.`,
       items: [...stageToSort],
