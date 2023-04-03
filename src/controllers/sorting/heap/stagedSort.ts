@@ -27,7 +27,7 @@ const heapify = (
     ...toSort[largest],
     className: parentClass,
   };
-  let name = "Check parent versus children nodes."
+  let name = "Check parent < children";
   let description = `Comparing parent(${compareItems[currentIndex].name})`;
   if (leftIndex < length) {
     compareItems[leftIndex] = {
@@ -47,10 +47,10 @@ const heapify = (
 
     if (toSort[largest].name < rightItem.name) largest = rightIndex;
   }
-  description += " node(s)."
-  if (!leftItem && !rightItem) description = "No children found"
+  description += " node(s).";
+  if (!leftItem && !rightItem) description = "No children found";
   const compareStage = {
-    name: `Check parent < children`,
+    name: name,
     description,
     followUp: `If current item is less than previous one, swap, otherwise proceed.`,
     items: compareItems,
@@ -94,6 +94,8 @@ const stagedSortArray = (
   }
   for (let index = length - 1; index > -1; index--) {
     const stageToSort = [...toSort];
+    stageToSort[index] = { ...stageToSort[index], className: parentClass };
+    stageToSort[0] = { ...stageToSort[0], className: parentClass };
     swap(stageToSort, index, 0);
     const swapStage = {
       name: `Swapping index(${index}) with root`,
@@ -107,6 +109,13 @@ const stagedSortArray = (
     heapify(toSort, index, 0, stages, parentClass, rightClass, leftClass);
   }
   console.log("Finished Sorting", toSort);
+  const lastStage: Stage = {
+    name: `Finished`,
+    description: `Sorting is done`,
+    followUp: `None...`,
+    items: toSort,
+  };
+  stages.push(lastStage);
   return stages;
 };
 
