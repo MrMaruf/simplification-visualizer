@@ -23,16 +23,13 @@ const swap = (toSort: Item[], index1: number, index2: number) => {
 };
 const sortArray = (toSort: Item[]) => {
   const length = toSort.length;
-  console.log("Sorting");
   for (let index = length / 2; index > -1; index--) {
-    console.log("Creating max heap");
     heapify(toSort, length, index);
   }
   for (let index = length - 1; index > -1; index--) {
     swap(toSort, index, 0);
     heapify(toSort, index, 0);
   }
-  console.log("Finished Sorting", toSort);
   return toSort;
 };
 export default sortArray

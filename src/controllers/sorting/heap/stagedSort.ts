@@ -89,7 +89,6 @@ const stagedSortArray = (
   const stages: Stage[] = [];
   const length = toSort.length;
   for (let index = length / 2; index > -1; index--) {
-    console.log("Creating max heap");
     heapify(toSort, length, index, stages, parentClass, rightClass, leftClass);
   }
   for (let index = length - 1; index > -1; index--) {
@@ -108,7 +107,6 @@ const stagedSortArray = (
     stages.push(swapStage);
     heapify(toSort, index, 0, stages, parentClass, rightClass, leftClass);
   }
-  console.log("Finished Sorting", toSort);
   const lastStage: Stage = {
     name: `Finished`,
     description: `Sorting is done`,
