@@ -23,6 +23,7 @@ const SortingControls = (props: Props) => {
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
   const originalItems: Item[] = useMemo(() => sortArray(items), [items.length]);
   const onReset = () => {
+    sortingCtx.dispatch({ type: "set stages", stages: [] });
     sortingCtx.dispatch({ type: "generate array", length: 10 });
   };
   const clearSortingInterval = () => {
@@ -75,7 +76,12 @@ const SortingControls = (props: Props) => {
         <SortTypeSelector value={sortingType} onChange={onSortingTypeChange} />
       </Grid>
       <Grid xs={3}>
-        <Button variant="contained" color="info" onClick={onShuffle}>
+        <Button
+          disabled={isSorting}
+          variant="contained"
+          color="info"
+          onClick={onShuffle}
+        >
           Shuffle Array
         </Button>
       </Grid>
@@ -91,7 +97,7 @@ const SortingControls = (props: Props) => {
       </Grid>
       <Grid xs={3}>
         <Button
-          disabled={isSorted}
+          disabled={isSorted || isSorting}
           variant="contained"
           color="warning"
           onClick={onReset}
