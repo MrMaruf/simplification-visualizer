@@ -57,7 +57,7 @@ const ItemsArrayContainer = (props: Props) => {
       <Grid paddingBottom="0" xs={8}>
         <List className={styles.list} items={array} />
       </Grid>
-      <Grid paddingTop="0" xs={4}></Grid>
+      <Grid id="arrow-title-placeholder" paddingTop="0" xs={4}></Grid>
       <Grid paddingTop="0" xs={8}>
         <Flipper flipKey={arrowArray.join("")} element={undefined}>
           <MaterialList className={styles.arrowList}>
