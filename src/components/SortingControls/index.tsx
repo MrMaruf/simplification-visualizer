@@ -17,7 +17,8 @@ type Props = {
 
 const SortingControls = (props: Props) => {
   const sortingCtx = useSortingState();
-  const { sortingType, items, stagingSpeed } = sortingCtx.state;
+  const { sortingType, items, stagingSpeed, currentStage, sortingStages } =
+    sortingCtx.state;
   const { stagedSortArray, sortArray } = props;
   const [isSorting, setIsSorting] = useState(false);
   const sortingIntervalRef = useRef<NodeJS.Timer | undefined>(undefined);
@@ -46,13 +47,16 @@ const SortingControls = (props: Props) => {
 
     const stages = stagedSortArray(toSort);
     sortingCtx.dispatch({ type: "set stages", stages });
-    if (sortingType === "staged automatic") startSortingInterval(stagingSpeed);
   };
   const startSortingInterval = (stagingSpeed: number) => {
     setIsSorting(true);
     sortingIntervalRef.current = setInterval(() => {
       sortingCtx.dispatch({ type: "move stage", onEnd: clearSortingInterval });
     }, stagingSpeed);
+  };
+  const onStaging = () => {
+    if (isSorting) return clearSortingInterval();
+    startSortingInterval(stagingSpeed);
   };
   useEffect(() => {
     return () => {
@@ -70,12 +74,13 @@ const SortingControls = (props: Props) => {
   const isSorted = items.every(
     (value, index) => originalItems[index].name === value.name
   );
+  const isStaging = currentStage > 0 && currentStage < sortingStages.length;
   return (
     <Grid container xs={11} className={styles.controllers}>
       <Grid xs={3}>
         <SortTypeSelector value={sortingType} onChange={onSortingTypeChange} />
       </Grid>
-      <Grid xs={3}>
+      <Grid xs={2}>
         <Button
           disabled={isSorting}
           variant="contained"
@@ -85,17 +90,7 @@ const SortingControls = (props: Props) => {
           Shuffle Array
         </Button>
       </Grid>
-      <Grid xs={3}>
-        <Button
-          disabled={isSorted}
-          variant="contained"
-          color={isSorting ? "error" : "primary"}
-          onClick={onSort}
-        >
-          {isSorting ? "Stop sorting" : "Sort Array"}
-        </Button>
-      </Grid>
-      <Grid xs={3}>
+      <Grid xs={2}>
         <Button
           disabled={isSorted || isSorting}
           variant="contained"
@@ -105,6 +100,28 @@ const SortingControls = (props: Props) => {
           Reset Array
         </Button>
       </Grid>
+      <Grid xs={2}>
+        <Button
+          disabled={isSorted}
+          variant="contained"
+          color="primary"
+          onClick={onSort}
+        >
+          Sort Array
+        </Button>
+      </Grid>
+      {sortingType === "staged automatic" && (
+        <Grid xs={3}>
+          <Button
+            disabled={sortingStages.length === 0 || isSorted}
+            variant="contained"
+            color={isSorting ? "error" : isStaging ? "secondary" : "primary"}
+            onClick={onStaging}
+          >
+            {isSorting ? "Stop" : isStaging ? "Continue" : "Start"} Staging
+          </Button>
+        </Grid>
+      )}
       {sortingType !== "realtime" && <StagedControls isSorting={isSorting} />}
     </Grid>
   );
