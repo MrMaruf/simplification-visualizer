@@ -1,12 +1,13 @@
+"use client";
+
 import styles from "./page.module.css";
 import Header from "@/components/Header";
-
+import Container from "@mui/material/Container";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <Container>
       <Header />
-      <div className={styles.center}></div>
-    </main>
+    </Container>
   );
 }
