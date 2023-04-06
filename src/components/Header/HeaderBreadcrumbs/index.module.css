@@ -1,0 +1,11 @@
+
+.breadcrumbs {
+  
+  ol > li {
+    text-transform: capitalize;
+    font-size: 1.1rem;
+    &:last-child {
+      font-weight: 700;
+    }
+  }
+}

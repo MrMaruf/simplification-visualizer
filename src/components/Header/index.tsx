@@ -14,6 +14,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Page from "@/types/Page";
+import HeaderBreadcrumbs from "./HeaderBreadcrumbs";
 
 const pages: Page[] = [
   { name: "Sorting Algorithms", url: "/algorithms/sorting/" },
@@ -24,31 +25,16 @@ type Props = {};
 const Header = (props: Props) => {
   const fullPath = usePathname();
   // console.log("'", path, "'");
-  const navigation = fullPath?.split("/");
+  const navigation =
+    fullPath?.trim() === "/" ? undefined : fullPath?.split("/");
+  // console.log(fullPath, navigation);
   // console.log(navigation);
 
   return (
-    <React.Fragment>
-      <Breadcrumbs aria-label="breadcrumb" className={styles.breadcrumbs}>
-        <Link underline="hover" color="inherit" href="/">
-          Visual Simplifier
-        </Link>
-        {navigation?.map((path, index) => {
-          const trimmedPath = path.trim();
-          const absolutePath = fullPath?.split(path)[0] + path;
-          if (trimmedPath.length > 0)
-            return (
-              <Link
-                underline="hover"
-                color="inherit"
-                href={absolutePath}
-                key={path}
-              >
-                {trimmedPath}
-              </Link>
-            );
-        })}
-      </Breadcrumbs>
+    <Box marginY="15px">
+      {navigation && (
+        <HeaderBreadcrumbs navigation={navigation} fullPath={fullPath} />
+      )}
       <AppBar className={styles.header} position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -85,7 +71,7 @@ const Header = (props: Props) => {
           </Toolbar>
         </Container>
       </AppBar>
-    </React.Fragment>
+    </Box>
   );
 };
 
