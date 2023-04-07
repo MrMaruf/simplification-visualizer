@@ -26,10 +26,32 @@ const sortArray = (toSort: Item[]) => {
   for (let index = length / 2; index > -1; index--) {
     heapify(toSort, length, index);
   }
+  console.log("Max heap: ", [...toSort]);
+  const maxHeap = [...toSort];
+  const countedElements: Item[] = [];
+  for (let index = 0; index < maxHeap.length; index++) {
+    const element = maxHeap[index];
+    const left = 2 * index + 1;
+    const right = 2 * index + 2;
+    const leftItem = toSort[left];
+    const rightItem = toSort[right];
+    if (element) {
+      console.log("Root :", element.name);
+      countedElements.push(element);
+    }
+    if (leftItem) {
+      console.log("Left :", leftItem.name);
+      countedElements.push(leftItem);
+    }
+    if (rightItem) {
+      console.log("Right :", rightItem.name);
+      countedElements.push(rightItem);
+    }
+  }
   for (let index = length - 1; index > -1; index--) {
     swap(toSort, index, 0);
     heapify(toSort, index, 0);
   }
   return toSort;
 };
-export default sortArray
+export default sortArray;
