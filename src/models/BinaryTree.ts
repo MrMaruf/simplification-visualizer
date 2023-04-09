@@ -52,5 +52,37 @@ class BinaryTree {
       return this.findNode(val, node.right);
     }
   }
+  swapNodes(val1: number, val2: number) {
+    const node1 = this.findNode(val1);
+    const node2 = this.findNode(val2);
+    if (!node1 || !node2) {
+      return;
+    }
+    const temp = node1.val;
+    node1.val = node2.val;
+    node2.val = temp;
+  }
+
+  toString() {
+    let str = "";
+    if (this.root === null) {
+      return str;
+    }
+
+    const stack: (TreeNode | undefined | null)[] = [this.root];
+    while (stack.length > 0) {
+      const node = stack.pop();
+      if (node === null) {
+        str += "#,";
+      } else {
+        str += node?.val + ",";
+        stack.push(node?.right);
+        stack.push(node?.left);
+      }
+    }
+    // Remove trailing comma
+    str = str.slice(0, -1);
+    return str;
+  }
 }
 export default BinaryTree;
