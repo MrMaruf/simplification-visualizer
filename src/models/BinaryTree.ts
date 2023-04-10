@@ -8,6 +8,9 @@ class BinaryTree {
   }
 
   insert(val: number) {
+    if (this.findNode(val) !== null) {
+      return; // value already exists in the tree, do not insert again
+    }
     const newNode = new TreeNode(val);
     if (this.root === null) {
       this.root = newNode;
@@ -43,46 +46,26 @@ class BinaryTree {
   }
 
   findNode(val: number, node: TreeNode | null = this.root): TreeNode | null {
-    if (node === null || node.val === val) {
-      return node;
-    }
-    if (val < node.val) {
-      return this.findNode(val, node.left);
-    } else {
-      return this.findNode(val, node.right);
-    }
+    if (node === null || node.val === val) return node;
+    if (val < node.val) return this.findNode(val, node.left);
+    return this.findNode(val, node.right);
   }
+
   swapNodes(val1: number, val2: number) {
     const node1 = this.findNode(val1);
     const node2 = this.findNode(val2);
-    if (!node1 || !node2) {
-      return;
-    }
+    if (!node1 || !node2) return;
     const temp = node1.val;
     node1.val = node2.val;
     node2.val = temp;
   }
 
   toString() {
-    let str = "";
     if (this.root === null) {
-      return str;
+      return "No root available";
     }
-
-    const stack: (TreeNode | undefined | null)[] = [this.root];
-    while (stack.length > 0) {
-      const node = stack.pop();
-      if (node === null) {
-        str += "#,";
-      } else {
-        str += node?.val + ",";
-        stack.push(node?.right);
-        stack.push(node?.left);
-      }
-    }
-    // Remove trailing comma
-    str = str.slice(0, -1);
-    return str;
+    return this.root.toString();
   }
 }
+
 export default BinaryTree;
