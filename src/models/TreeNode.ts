@@ -14,7 +14,8 @@ class TreeNode {
   }
 
   toString(indent: string = ""): string {
-    let str = " " + this.val + "\n";
+    let str = this.val + "\n";
+    if (indent.length > 0) str = " " + str;
     if (this.left && this.right) str += indent + "├";
     else if (this.left || this.right) str += indent + "└";
     if (this.left !== null) {
