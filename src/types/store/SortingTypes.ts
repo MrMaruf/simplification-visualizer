@@ -1,3 +1,4 @@
+import BinaryTree from "@/models/BinaryTree";
 import StyleProps from "../BaseProps/StyleProps";
 
 export type Item = { name: number } & StyleProps;
@@ -7,4 +8,5 @@ export type Stage = {
   name: string;
   description: string;
   followUp: string;
+  binaryTree?: BinaryTree;
 };
