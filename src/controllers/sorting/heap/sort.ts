@@ -33,6 +33,8 @@ const sortArray = (toSort: Item[]) => {
   const values = toSort.map((value) => value.name);
   const tree = new MaxHeapBinaryTree();
   tree.arrayToTree(values);
+  console.log("Max heap array: ", values);
+  console.log(tree.treeToArray());
   console.log(tree.root?.toString());
   const maxHeap = [...toSort];
   const countedElements: Item[] = [];
