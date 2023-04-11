@@ -1,3 +1,4 @@
+import MaxHeapBinaryTree from "@/models/MaxHeapBinaryTree";
 import TreeNode from "@/models/TreeNode";
 import { Item } from "@/types/store/SortingTypes";
 const heapify = (toSort: Item[], length: number, currentIndex: number) => {
@@ -22,17 +23,7 @@ const swap = (toSort: Item[], index1: number, index2: number) => {
   toSort[index2] = item1;
   toSort[index1] = item2;
 };
-function arrayToMaxHeap(arr: number[], i = 0): TreeNode | null {
-  if (i >= arr.length) {
-    return null;
-  }
 
-  const root = new TreeNode(arr[i]);
-  root.left = arrayToMaxHeap(arr, 2 * i + 1);
-  root.right = arrayToMaxHeap(arr, 2 * i + 2);
-
-  return root;
-}
 const sortArray = (toSort: Item[]) => {
   const length = toSort.length;
   for (let index = length / 2; index > -1; index--) {
@@ -40,8 +31,9 @@ const sortArray = (toSort: Item[]) => {
   }
   console.log("Max heap array: ", [...toSort]);
   const values = toSort.map((value) => value.name);
-  const root = arrayToMaxHeap(values);
-  console.log(root?.toString());
+  const tree = new MaxHeapBinaryTree();
+  tree.arrayToTree(values);
+  console.log(tree.root?.toString());
   const maxHeap = [...toSort];
   const countedElements: Item[] = [];
   for (let index = 0; index < maxHeap.length; index++) {
