@@ -89,13 +89,20 @@ const stagedSortArray = (
 ): Stage[] => {
   const stages: Stage[] = [];
   const length = toSort.length;
-  const tree = new MaxHeapBinaryTree();
-  const values = toSort.map((value) => value.name);
-  tree.arrayToTree([...values]);
   for (let index = length / 2; index > -1; index--) {
     heapify(toSort, length, index, stages, parentClass, rightClass, leftClass);
   }
-
+  const tree = new MaxHeapBinaryTree();
+  const values = toSort.map((value) => value.name);
+  tree.arrayToTree([...values]);
+  const maxHeapFinishedStage: Stage = {
+    name: `Built max heap`,
+    description: `Finished max heap building`,
+    followUp: `Start sorting.`,
+    items: [...toSort],
+    binaryTree: tree,
+  };
+  stages.push(maxHeapFinishedStage);
   for (let index = length - 1; index > -1; index--) {
     const stageToSort = [...toSort];
     stageToSort[index] = { ...stageToSort[index], className: parentClass };
