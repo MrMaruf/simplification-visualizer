@@ -1,5 +1,6 @@
 "use client";
 
+import BinaryTreeComponent from "@/components/BinaryTree";
 import ItemsArrayContainer from "@/components/ItemsArrayContainer";
 import SortingControls from "@/components/SortingControls";
 import { sortArray, stagedSortArray } from "@/controllers/sorting/heap";
@@ -18,7 +19,9 @@ type Props = {};
 
 const HeapSortingAlgorithm = (props: Props) => {
   const sortingCtx = useSortingState();
-  const { items } = sortingCtx.state;
+  const { items, currentStage, sortingStages } = sortingCtx.state;
+  const { binaryTree } = sortingStages[currentStage - 1] ?? {};
+  console.log(sortingStages, currentStage);
   return (
     <Box>
       <h1>Heap Sort Algorithm</h1>
@@ -38,6 +41,7 @@ const HeapSortingAlgorithm = (props: Props) => {
           name="Numbers Array"
           array={items}
         />
+        {binaryTree && <BinaryTreeComponent tree={binaryTree} />}
       </Grid>
     </Box>
   );
