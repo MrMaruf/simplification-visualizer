@@ -1,4 +1,5 @@
 import TreeNode from "@/models/TreeNode";
+import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
 
@@ -11,7 +12,7 @@ const TreeNodeComponent = (props: Props) => {
   return (
     <React.Fragment>
       <Grid xs={12} textAlign="center">
-        {treeNode.val}
+        <Chip label={treeNode.val} variant="outlined" />
       </Grid>
       {treeNode.left && (
         <Grid container xs={6}>
