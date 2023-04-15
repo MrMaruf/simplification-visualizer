@@ -15,14 +15,34 @@ const TreeNodeComponent = (props: Props) => {
         <Chip label={treeNode.val} variant="outlined" />
       </Grid>
       {treeNode.left && (
-        <Grid container xs={6}>
-          <TreeNodeComponent treeNode={treeNode.left} />
-        </Grid>
+        <React.Fragment>
+          <Grid container xs={6}>
+            <svg
+              id={treeNode.val + ""}
+              width="50"
+              height="50"
+              style={{ position: "absolute" }}
+            >
+              <line x1="50" y1="0" x2="0" y2="50" stroke="white" />
+            </svg>
+            <TreeNodeComponent treeNode={treeNode.left} />
+          </Grid>
+        </React.Fragment>
       )}
       {treeNode.right && (
-        <Grid container xs={6}>
-          <TreeNodeComponent treeNode={treeNode.right} />
-        </Grid>
+        <React.Fragment>
+          <Grid container xs={6}>
+            <svg
+              id={treeNode.val + ""}
+              width="50"
+              height="50"
+              style={{ position: "absolute" }}
+            >
+              <line x1="0" y1="0" x2="50" y2="50" stroke="white" />
+            </svg>
+            <TreeNodeComponent treeNode={treeNode.right} />
+          </Grid>
+        </React.Fragment>
       )}
     </React.Fragment>
   );
