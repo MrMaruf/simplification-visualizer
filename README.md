@@ -36,3 +36,18 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+# ToDo
+- [ ] - Think about binary tree change animation
+- [ ] - Finish the binary tree change & buildup
+## Sorting
+- [ ] - Implement sorting for  bubble sort
+- [X] - Implement sorting for  selection sort
+- [X] - Implement sorting for  insertion sort
+- [ ] - Implement sorting for  merge sort
+- [ ] - Implement sorting for  quicksort sort
+- [ ] - Implement sorting for  counting sort
+- [ ] - Implement sorting for  radix sort
+- [ ] - Implement sorting for  bucket sort
+- [X] - Implement sorting for  heap sort
+- [ ] - Implement sorting for  shell sort
+
