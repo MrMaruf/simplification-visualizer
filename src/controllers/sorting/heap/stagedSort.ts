@@ -1,7 +1,7 @@
 import MaxHeapBinaryTree from "@/models/MaxHeapBinaryTree";
 import { Item, Stage } from "@/types/store/SortingTypes";
 
-//TODO: Implement staging sort
+//TODO: Improve staging sort to include binary tree turning into heap
 const swap = (toSort: Item[], index1: number, index2: number) => {
   const item1 = toSort[index1];
   const item2 = toSort[index2];
