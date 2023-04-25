@@ -19,7 +19,6 @@ type Props = {
   secondaryArrowClass?: string[];
   infoArrowClass?: string[];
 };
-// TODO: Create an indicator under list
 const ItemsArrayContainer = (props: Props) => {
   const {
     array,
