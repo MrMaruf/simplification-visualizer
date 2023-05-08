@@ -1,16 +1,19 @@
 .parent {
   background: white;
   color: black;
+  transform: translateY(45px);
 }
 
 .left {
   background: orange;
   color: black;
+  transform: translateY(45px);
 }
 
 .right {
   background: rgb(0, 221, 184);
   color: black;
+  transform: translateY(45px);
   /* background: rgb(199, 199, 199);
   color: black; */
 }

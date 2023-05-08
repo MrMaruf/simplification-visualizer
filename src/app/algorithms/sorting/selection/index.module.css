@@ -1,11 +1,13 @@
 .comparingItem {
   background: white;
   color: black;
+  transform: translateY(45px);
 }
 
 .comparableItem {
   background: orange;
   color: black;
+  transform: translateY(45px);
 }
 
 .currentMinimumIndex {
