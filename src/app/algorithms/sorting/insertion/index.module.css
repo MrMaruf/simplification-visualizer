@@ -1,11 +1,15 @@
 .comparingItem {
-  background: white;
-  color: black;
-  transform: translateY(45px);
+  > div {
+    background: white;
+    color: black;
+    transform: translateY(45px);
+  }
 }
 
 .comparableItem {
-  background: orange;
-  color: black;
-  transform: translateY(45px);
+  > div {
+    background: orange;
+    color: black;
+    transform: translateY(45px);
+  }
 }
