@@ -19,38 +19,43 @@ export const sortArray = (toSort: Item[]) => {
 export const stagedSortArray = (
   comparingItemClass: string,
   comparableItemClass: string,
-  toSort: Item[]
+  array: Item[]
 ) => {
   const stages: Stage[] = [];
-  const length = toSort.length;
+  const length = array.length;
   for (let index = 1; index < length; index++) {
     let index2 = index;
     let swappingStage: Stage | undefined;
-    const originalSortCopy = [...toSort];
+    const originalArrayCopy = [...array];
     do {
-      let elementLeft: Item = toSort[index2 - 1];
-      let elementRight: Item = toSort[index2];
-      const toSortCopy: Item[] = [...originalSortCopy];
-      toSortCopy[index2 - 1] = {
+      let elementLeft: Item = array[index2 - 1];
+      let elementRight: Item = array[index2];
+      const visualArray: Item[] = [...originalArrayCopy];
+      visualArray[index2 - 1] = {
         ...elementLeft,
         className: comparableItemClass,
       };
-      toSortCopy[index] = { ...elementRight, className: comparingItemClass };
+      visualArray[index] = { ...elementRight, className: comparingItemClass };
       const preCompareStage: Stage = {
         name: `Comparing ${elementRight.name} < ${elementLeft.name}`,
         description: `Comparing current item(${elementRight.name}) with previous item(${elementLeft.name})`,
         followUp: `If current item is less than previous one, swap, otherwise proceed.`,
-        items: toSortCopy,
+        items: visualArray,
       };
       stages.push(preCompareStage);
       if (elementRight.name > elementLeft.name) break;
-      toSort[index2] = elementLeft;
-      toSort[index2 - 1] = elementRight;
+      array[index2] = elementLeft;
+      array[index2 - 1] = elementRight;
+      // const postSwapArray = [...array];
+      // postSwapArray[index - 1] = {
+      //   ...elementRight,
+      //   className: comparingItemClass,
+      // };
       swappingStage = {
-        name: `Swapping ${elementRight.name} & ${elementLeft.name}`,
-        description: `Swapping ${elementRight.name} with ${elementLeft.name}`,
+        name: `Moving ${elementRight.name}`,
+        description: `Found smaller value. Moving ${elementRight.name} in front of it.`,
         followUp: `Proceed to the next number`,
-        items: [...toSort],
+        items: [...array],
       };
       index2--;
     } while (index2 > 0);
@@ -60,7 +65,7 @@ export const stagedSortArray = (
     name: `Finished`,
     description: `Sorting is done`,
     followUp: `None...`,
-    items: toSort,
+    items: array,
   };
   stages.push(lastStage);
   return stages;
